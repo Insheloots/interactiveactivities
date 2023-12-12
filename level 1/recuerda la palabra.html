@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuerda la palabra</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="font-poppins flex items-center justify-center flex-col h-screen m-0 bg-neutral-100">
+
+    <!-- Modal de inicio -->
+    <div id="startModal"
+        class="fixed top-0 left-0 w-full h-full bg-neutral-800 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-8 rounded shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4 text-sky-600">¡Bienvenido a Recuerda la Palabra!</h2>
+            <p class="text-lg mb-4">Presiona el botón para comenzar el juego.</p>
+            <button
+                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 font-semibold py-2 px-4 rounded-lg"
+                onclick="iniciarJuego()">Comenzar Juego</button>
+        </div>
+    </div>
+
+    <!-- Contenedor de titulo -->
+    <div id="titulo" class="text-center">
+        <h1
+            class="text-xl font-bold mb-10 text-sky-600 bg-gradient-to-r from-sky-100 to-sky-200 px-2 py-2 w-52 rounded-full">
+            Recuerda la palabra
+        </h1>
+    </div>
+
+    <!-- Contenedor de elementos principales -->
+    <div class="mb-8">
+        <div id="wordContainer" class="mb-8 text-4xl text-center font-medium text-sky-900"></div>
+
+        <div id="optionsContainer" class="flex items-center space-y-8">
+            <div class="flex flex-col items-start space-y-2">
+                <span class="text-base font-medium text-slate-700 px-1">Introduce la palabra</span>
+                <input type="text" id="wordInput"
+                    class="border border-gray-300 rounded-md px-4 py-1 text-base font-normal focus:outline-none focus:border-blue-500"
+                    placeholder="Esperando..." onkeydown="if(event.key==='Enter'){verificarPalabra()}">
+            </div>
+            <button
+                class="bg-blue-500 hover:bg-blue-700 text-white text-base font-normal px-4 py-1 rounded option-button ml-2"
+                onclick="verificarPalabra(document.getElementById('wordInput').value)">Enviar</button>
+            <div id="checkmarkSvg" style="display: none;" class="animate-ping ml-80 fixed">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30">
+                    <path
+                        d="M 26.980469 5.9902344 A 1.0001 1.0001 0 0 0 26.292969 6.2929688 L 11 21.585938 L 4.7070312 15.292969 A 1.0001 1.0001 0 1 0 3.2929688 16.707031 L 10.292969 23.707031 A 1.0001 1.0001 0 0 0 11.707031 23.707031 L 27.707031 7.7070312 A 1.0001 1.0001 0 0 0 26.980469 5.9902344 z">
+                    </path>
+                </svg>
+            </div>
+            <div id="incorrectmarkSvg" style="display: none;" class="animate-ping ml-80 fixed">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 50 50">
+                    <path
+                        d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z">
+                    </path>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Puntuación -->
+    <div id="scoreContainer"
+        class="absolute top-4 right-4 text-base font-semibold text-white bg-sky-600 p-2 rounded-lg shadow">
+        Puntuación: <span id="score" class="ml-2">0</span>
+    </div>
+
+
+    <!-- Modal de finalización -->
+    <div id="modal"
+        class="fixed top-0 left-0 w-full h-full bg-neutral-800 bg-opacity-50 hidden flex justify-center items-center">
+        <div class="bg-white p-8 rounded shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4 text-sky-600">¡Felicidades! Juego terminado</h2>
+            <p class="text-lg mb-4 font-bold">Puntuación: <span id="finalScore">0</span></p>
+            <button
+                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 font-semibold py-2 px-4 rounded-lg"
+                onclick="reiniciarJuego()">Reiniciar Juego</button>
+        </div>
+    </div>
+
+
+
+    <!-- Scripts -->
+    <script>
+
+
+        const palabras = ["perro", "gato", "casa", "coche", "sol", "luna", "montaña", "río", "playa", "libro", "computadora", "teléfono", "jardín", "pizza", "avión", "silla", "mesa", "amigo", "familia", "trabajo", "estudio", "ciudad", "mar", "bosque", "canción", "arte", "viaje", "tiempo", "vida", "amor", "paz", "felicidad", "cine", "musica", "foto", "deporte", "comida", "agua", "fuego", "aire", "nieve", "flor", "fruta", "huevo", "color", "día", "noche", "fiesta"];
+        let puntuacion = 0
+
+
+        // Función para mostrar el modal de inicio
+        function mostrarModalInicio() {
+            document.getElementById('startModal').style.display = 'flex';
+        }
+
+        // Función para iniciar el juego al cerrar el modal de inicio
+        function iniciarJuego() {
+            document.getElementById('startModal').style.display = 'none';
+            reiniciarJuego();
+        }
+
+        // Función para reiniciar el juego
+        function reiniciarJuego() {
+            // Ocultar modal de juego terminado
+            document.getElementById('modal').style.display = 'none';
+
+            // Reiniciar puntuación
+            puntuacion = 0;
+            document.getElementById('score').textContent = puntuacion;
+
+            mostrarPalabraAleatoria();
+        }
+
+        // Función generadora de palabras en wordContainer
+        function mostrarPalabraAleatoria() {
+            const wordContainer = document.getElementById('wordContainer');
+            const palabraAleatoria = palabras[Math.floor(Math.random() * palabras.length)];
+            wordContainer.textContent = palabraAleatoria;
+
+            // Ocultar el wordContainer durante 1 segundo
+            wordContainer.style.display = "block";
+            setTimeout(() => {
+                wordContainer.style.display = "none";
+            }, 1000);
+        }
+
+        // Verificar respuesta
+        function verificarPalabra() {
+            const wordContainer = document.getElementById('wordContainer');
+            const wordInput = document.getElementById('wordInput');
+            const wordInputValue = wordInput.value.trim().toLowerCase();
+            const displayedWord = wordContainer.textContent.trim().toLowerCase();
+            const checkmarkSvg = document.getElementById('checkmarkSvg');
+            const incorrectmarkSvg = document.getElementById('incorrectmarkSvg');
+            const audioElement = new Audio();
+
+            if (wordInputValue === displayedWord) {
+                audioElement.src = 'https://cdn.freesound.org/previews/657/657948_6142149-lq.mp3';
+                audioElement.play();
+                // Mostrar el checkmarkSvg durante 1 segundo
+                checkmarkSvg.style.display = "block";
+                setTimeout(() => {
+                    checkmarkSvg.style.display = "none";
+                }, 500);
+
+                // Limpiar el input
+                wordInput.value = '';
+
+                // Mostrar una nueva palabra después de la verificación
+                setTimeout(() => {
+                    mostrarPalabraAleatoria();
+                }, 700)
+
+                // Asigna la puntuación
+                puntuacion++
+                document.getElementById('score').textContent = puntuacion;
+
+                if (puntuacion === 10) {
+                    document.getElementById('finalScore').textContent = puntuacion;
+                    document.getElementById('modal').style.display = 'flex';
+                }
+
+            } else {
+                audioElement.src = 'https://cdn.freesound.org/previews/173/173958_2437358-lq.mp3';
+                audioElement.play();
+                incorrectmarkSvg.style.display = "block";
+                setTimeout(() => {
+                    incorrectmarkSvg.style.display = "none";
+                }, 500);
+
+                // Limpiar el input
+                wordInput.value = '';
+
+                // Mostrar una nueva palabra después de la verificación
+                setTimeout(() => {
+                    mostrarPalabraAleatoria();
+                }, 700)
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confusión de palabra</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="font-poppins flex items-center justify-center flex-col h-screen m-0 bg-neutral-100">
+    <div id="startModal"
+        class="fixed top-0 left-0 w-full h-full bg-neutral-800 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-8 rounded shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4 text-sky-600">¡Bienvenido a Confusión de Palabra!</h2>
+            <p class="text-lg mb-4">Presiona el botón para comenzar el juego.</p>
+            <button
+                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 font-semibold py-2 px-4 rounded-lg"
+                onclick="iniciarJuego()">Comenzar Juego</button>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <h1
+            class="text-2xl font-semibold mb-10 text-sky-600 bg-gradient-to-r from-sky-100 to-sky-200 px-2 py-2 w-64 rounded-full">
+            Confusión de Palabra
+        </h1>
+    </div>
+
+    <div class="mb-8 text-4xl font-medium text-sky-900">
+        <h1 id="animalWord">Verde</h1>
+    </div>
+
+    <div id="container" class="text-center mb-8">
+        <button class="colorButton bg-neutral-200 hover:bg-neutral-300 text-black font-medium py-2 px-4 mx-2 rounded-lg"
+            onclick="cambiarColor()">Rojo</button>
+        <button class="colorButton bg-neutral-200 hover:bg-neutral-300 text-black font-medium py-2 px-4 mx-2 rounded-lg"
+            onclick="cambiarColor()">Azul</button>
+        <button class="colorButton bg-neutral-200 hover:bg-neutral-300 text-black font-medium py-2 px-4 mx-2 rounded-lg"
+            onclick="cambiarColor()">Verde</button>
+        <button class="colorButton bg-neutral-200 hover:bg-neutral-300 text-black font-medium py-2 px-4 mx-2 rounded-lg"
+            id="colorEspecial" onclick="colorEspecial()">Amarillo</button>
+    </div>
+
+    <!-- Contador de puntuación -->
+    <div id="scoreContainer"
+        class="absolute top-4 right-4 text-lg font-semibold bg-gray-950 text-gray-300 p-2 rounded-lg shadow">
+        Puntuación: <span id="puntos" class="ml-2">0</span>
+    </div>
+    <!-- Modal de juego terminado -->
+    <div id="modal"
+        class="fixed top-0 left-0 w-full h-full bg-neutral-800 bg-opacity-50 hidden flex justify-center items-center">
+        <div class="bg-white p-8 rounded shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4 text-sky-600">¡Felicidades! Juego terminado</h2>
+            <p class="text-lg mb-4">Puntuación: <span id="finalScore">0</span></p>
+            <button
+                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 font-semibold py-2 px-4 rounded-lg"
+                onclick="reiniciarJuego()">Reiniciar Juego</button>
+        </div>
+    </div>
+
+    <script>
+        const colores = {
+            red: "Rojo",
+            blue: "Azul",
+            green: "Verde",
+            orange: "Naranja",
+            purple: "Morado",
+            cyan: "Cyan",
+            gray: "Gris",
+            pink: "Rosado",
+            brown: "Marrón"
+        };
+
+        const nombreColores = ["Rosado", "Amarillo", "Marrón", "Gris", "Cyan", "Verde", "Rojo", "Azul", "Naranja", "Morado"];
+
+        let coloresRestantes = Object.values(colores);
+        let puntos = 0;
+
+        // Función para mostrar el modal de inicio
+        function mostrarModalInicio() {
+            document.getElementById('startModal').style.display = 'flex';
+        }
+
+        // Función para iniciar el juego al cerrar el modal de inicio
+        function iniciarJuego() {
+            document.getElementById('startModal').style.display = 'none';
+            cambiarColor();
+        }
+
+        function obtenerColorAleatorioSinRepetir() {
+            if (coloresRestantes.length === 0) {
+                coloresRestantes = Object.values(colores);
+            }
+
+            const indiceAleatorio = Math.floor(Math.random() * coloresRestantes.length);
+            return coloresRestantes.splice(indiceAleatorio, 1)[0];
+        }
+
+        function cambiarColor() {
+            const h1Elemento = document.getElementById("animalWord");
+            const colorNuevo = obtenerColorAleatorioSinRepetir();
+            h1Elemento.style.color = Object.keys(colores).find(key => colores[key] === colorNuevo);
+            h1Elemento.textContent = nombreColores[Math.floor(Math.random() * nombreColores.length)];
+
+            const botones = document.querySelectorAll(".colorButton");
+            coloresRestantes = [...Object.values(colores)]; // Restablecer los colores disponibles
+
+            // Obtener el color especial actual
+            const colorEspecialActual = document.getElementById("colorEspecial").textContent;
+
+            botones.forEach(button => {
+                let colorBoton;
+
+                // Evitar que el color especial se repita en los botones
+                do {
+                    colorBoton = obtenerColorAleatorioSinRepetir();
+                } while (colorBoton === colorEspecialActual);
+
+                button.textContent = colores[colorBoton];
+            });
+
+            document.getElementById("colorEspecial").textContent = colores[h1Elemento.style.color];
+        }
+
+        function cambiarPosicionColorEspecial() {
+            const buttonsContainer = document.getElementById("container");
+            const colorEspecialButton = document.getElementById("colorEspecial");
+
+            const indicesExcluyendoActual = Array.from({ length: buttonsContainer.childElementCount }, (_, i) => i)
+                .filter(index => index !== Array.from(buttonsContainer.children).indexOf(colorEspecialButton));
+
+            const indiceAleatorio = indicesExcluyendoActual[Math.floor(Math.random() * indicesExcluyendoActual.length)];
+
+            buttonsContainer.insertBefore(colorEspecialButton, buttonsContainer.children[indiceAleatorio]);
+        }
+
+        function colorEspecial() {
+            const audioElement = new Audio();
+            audioElement.src = 'https://cdn.freesound.org/previews/657/657948_6142149-lq.mp3';
+            const h1Elemento = document.getElementById("animalWord");
+            h1Elemento.textContent = nombreColores[Math.floor(Math.random() * nombreColores.length)];
+
+            const colorNuevo = obtenerColorAleatorioSinRepetir();
+            h1Elemento.style.color = Object.keys(colores).find(key => colores[key] === colorNuevo);
+
+            const botones = document.querySelectorAll(".colorButton");
+            botones.forEach(button => {
+                button.textContent = obtenerColorAleatorioSinRepetir();
+            });
+
+            document.getElementById("colorEspecial").textContent = colores[h1Elemento.style.color];
+
+            cambiarPosicionColorEspecial();
+
+            if (colores[h1Elemento.style.color] === document.getElementById("colorEspecial").textContent) {
+                audioElement.play();
+                puntos++;
+                document.getElementById("puntos").textContent = `${puntos}`;
+            }
+
+            // Chequear si el juego ha terminado
+            if (puntos === 10) {
+                mostrarModalJuegoTerminado();
+            }
+        }
+
+        // Función para mostrar el modal de juego terminado
+        function mostrarModalJuegoTerminado() {
+            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('finalScore').textContent = `${puntos}`;
+        }
+
+        // Función para reiniciar el juego
+        function reiniciarJuego() {
+            document.getElementById('modal').style.display = 'none';
+            puntos = 0;
+            document.getElementById("puntos").textContent = `${puntos}`;
+            cambiarColor();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movimiento de Círculos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .circle-container {
+            display: grid;
+            grid-template-columns: repeat(3, 120px);
+            grid-gap: 40px;
+            position: relative;
+        }
+
+        .circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #3498db;
+            position: relative;
+            animation: moveCircle 2s ease-in-out infinite alternate;
+        }
+
+        .circle1 {
+            animation-name: moveCircle1;
+        }
+
+        .circle2 {
+            animation-name: moveCircle2;
+        }
+
+        .circle3 {
+            animation-name: moveCircle3;
+        }
+
+        .circle4 {
+            animation-name: moveCircle4;
+        }
+
+        .circle6 {
+            animation-name: moveCircle6;
+        }
+
+        .circle7 {
+            animation-name: moveCircle7;
+        }
+
+        .circle8 {
+            animation-name: moveCircle8;
+        }
+
+        .circle9 {
+            animation-name: moveCircle9;
+        }
+
+        .no-move {
+            animation-name: none !important;
+        }
+
+        @keyframes moveCircle {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(0, 50px);
+            }
+        }
+
+        @keyframes moveCircle1 {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(45px, 45px);
+            }
+        }
+
+        @keyframes moveCircle2 {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(0, 45px);
+            }
+        }
+
+        @keyframes moveCircle3 {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-45px, 45px);
+            }
+        }
+
+        @keyframes moveCircle4 {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(45px, 0);
+            }
+        }
+
+        @keyframes moveCircle6 {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-45px, 0);
+            }
+        }
+
+        @keyframes moveCircle7 {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-45px, -45px);
+            }
+        }
+
+        @keyframes moveCircle8 {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(0, -45px);
+            }
+        }
+
+        @keyframes moveCircle9 {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(45px, -45px);
+            }
+        }
+
+        /* Estilos del modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            /* Asegura que el modal esté por encima de los círculos */
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal-button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-content">
+            <p>Presiona el botón para iniciar la animación</p>
+            <button class="modal-button" onclick="startAnimation()">Iniciar Animación</button>
+        </div>
+    </div>
+
+    <!-- Contenedor de círculos -->
+    <div class="circle-container">
+        <div class="circle circle1 bg-blue-500"></div>
+        <div class="circle circle2 bg-green-500"></div>
+        <div class="circle circle3 bg-lime-500"></div>
+        <div class="circle circle4 bg-cyan-500"></div>
+        <div class="circle no-move bg-red-500"></div>
+        <div class="circle circle6 bg-violet-500"></div>
+        <div class="circle circle9 bg-orange-500"></div>
+        <div class="circle circle8 bg-yellow-500"></div>
+        <div class="circle circle7 bg-indigo-500"></div>
+    </div>
+
+    <script>
+        // Muestra el modal al cargar la página
+        document.addEventListener("DOMContentLoaded", function () {
+            let modal = document.getElementById("myModal");
+            modal.style.display = "flex";
+        });
+
+        // Función para iniciar la animación y ocultar el modal
+        function startAnimation() {
+            let modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+
+</html>

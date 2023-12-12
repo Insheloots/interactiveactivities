@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="font-poppins flex items-center justify-center flex-col h-screen m-0 bg-neutral-100">
+    <!-- Modal de inicio -->
+    <div id="startModal"
+        class="fixed top-0 left-0 w-full h-full bg-neutral-800 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-8 rounded shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4 text-sky-600">¡Bienvenido a Sigue la Palabra!</h2>
+            <p class="text-lg mb-4">Presiona el botón para comenzar el juego.</p>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded"
+                onclick="iniciarJuego()">Comenzar Juego</button>
+        </div>
+    </div>
+    <div id="titulo" class="text-center">
+        <h1
+            class="text-2xl font-semibold mb-10 text-sky-600 bg-gradient-to-r from-sky-100 to-sky-200 px-2 py-2 w-64 rounded-full">
+            Sigue la Palabra
+        </h1>
+    </div>
+    <div class="text-center mb-8">
+        <div id="wordContainer" class="mb-8 text-4xl font-medium text-sky-900"></div>
+        <div id="optionsContainer" class="flex justify-center space-x-4">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded option-button"
+                onclick="verificarRespuesta(this.textContent)"></button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded option-button"
+                onclick="verificarRespuesta(this.textContent)"></button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded option-button"
+                onclick="verificarRespuesta(this.textContent)"></button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded option-button"
+                onclick="verificarRespuesta(this.textContent)"></button>
+        </div>
+    </div>
+
+
+
+
+    <!-- Contador de puntuación -->
+    <div id="scoreContainer"
+        class="absolute top-4 right-4 text-lg font-semibold text-white bg-sky-600 p-2 rounded shadow">
+        Puntuación: <span id="score" class="ml-2">0</span>
+    </div>
+    <!-- Modal de juego terminado -->
+    <div id="modal"
+        class="fixed top-0 left-0 w-full h-full bg-neutral-800 bg-opacity-50 hidden flex justify-center items-center">
+        <div class="bg-white p-8 rounded shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4 text-sky-600">¡Felicidades! Juego terminado</h2>
+            <p class="text-lg mb-4">Puntuación: <span id="finalScore">0</span></p>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded"
+                onclick="reiniciarJuego()">Reiniciar Juego</button>
+        </div>
+    </div>
+
+
+    <script>
+        const palabras = [
+            ['Programación', 'Desarrollo', 'Web', 'Aplicación', 'JavaScript', 'HTML', 'CSS', 'Aleatorio', 'Pantalla', 'Framework'],
+            ['Computadora', 'Software', 'Hardware', 'Algoritmo', 'Base de datos', 'Red', 'Programa', 'Ejecución', 'Memoria', 'Interfaz'],
+            ['Internet', 'Navegador', 'Correo electrónico', 'Red social', 'Enlace', 'Sitio web', 'Descargar', 'Subir', 'Conectar', 'Streaming'],
+            ['Innovación', 'Robótica', 'Inteligencia', 'Ciencia', 'Realidad', 'Ciberseguridad', 'Big Data', 'IoT', 'Cloud', 'Machine Learning'],
+            ['Fotografía', 'Aventura', 'Música', 'Gastronomía', 'Deporte', 'Naturaleza', 'Viaje', 'Cine', 'Tecnología', 'Historia'],
+            ['Desarrollo', 'Proyecto', 'Equipo', 'Metodología', 'Cliente', 'Entrega', 'Planificación', 'Evaluación', 'Iteración', 'Calidad'],
+            ['Energía', 'Sostenibilidad', 'Renovable', 'Medio ambiente', 'Reciclaje', 'Cambio climático', 'Contaminación', 'Biodiversidad', 'Ecología', 'Eficiencia'],
+            ['Salud', 'Bienestar', 'Ejercicio', 'Nutrición', 'Mental', 'Físico', 'Dieta', 'Descanso', 'Hábitos', 'Prevención'],
+            ['Creatividad', 'Diseño', 'Innovación', 'Arte', 'Expresión', 'Estilo', 'Inspira', 'Imagina', 'Originalidad', 'Estética'],
+            ['Astronomía', 'Planeta', 'Estrella', 'Galaxia', 'Exploración', 'Telescopio', 'Observación', 'Universo', 'Cosmos', 'Cielo'],
+            ['Educación', 'Aprendizaje', 'Conocimiento', 'Estudio', 'Maestro', 'Estudiante', 'Escuela', 'Universidad', 'Disciplina', 'Enseñanza'],
+            ['Finanzas', 'Economía', 'Dinero', 'Inversión', 'Ahorro', 'Mercado', 'Banco', 'Negocio', 'Capital', 'Ganancia'],
+            ['Cultura', 'Tradición', 'Historia', 'Herencia', 'Identidad', 'Folklore', 'Artesanía', 'Festival', 'Patrimonio', 'Costumbre'],
+            ['Comunicación', 'Medios', 'Redes sociales', 'Periodismo', 'Publicidad', 'Información', 'Interacción', 'Comunidad', 'Contenido', 'Compartir'],
+            ['Transporte', 'Movilidad', 'Vehículo', 'Infraestructura', 'Tráfico', 'Viaje', 'Carretera', 'Tren', 'Avión', 'Bicicleta'],
+            ['Política', 'Gobierno', 'Democracia', 'Derechos', 'Liderazgo', 'Participación', 'Legislación', 'Campaña', 'Candidato', 'Voto'],
+            ['Religión', 'Espiritualidad', 'Fe', 'Creencia', 'Dios', 'Ritual', 'Iglesia', 'Oración', 'Sacramento', 'Ceremonia'],
+            ['Moda', 'Tendencia', 'Estilo', 'Ropa', 'Accesorio', 'Diseñador', 'Pasarela', 'Modelo', 'Temporada', 'Confección'],
+            ['Ciudad', 'Urbanismo', 'Arquitectura', 'Edificio', 'Espacio público', 'Planificación', 'Infraestructura', 'Barrio', 'Calle', 'Plaza'],
+            ['Emoción', 'Sentimiento', 'Amor', 'Felicidad', 'Tristeza', 'Estrés', 'Miedo', 'Enojo', 'Sorpresa', 'Empatía'],
+            ['Psicología', 'Mente', 'Emoción', 'Personalidad', 'Conducta', 'Terapia', 'Trastorno', 'Cognición', 'Autoestima', 'Relación'],
+            ['Debate', 'Argumento', 'Opinión', 'Expresión', 'Comunicación', 'Persuasión', 'Oratoria', 'Medios', 'Redes sociales', 'Periodismo'],
+            ['Arquitectura', 'Diseño', 'Construcción', 'Urbanismo', 'Espacio', 'Estilo', 'Funcionalidad', 'Sostenibilidad', 'Innovación', 'Patrimonio'],
+            ['Animación', 'Cine', 'Dibujo', 'Escultura', 'Ilustración', 'Videojuego', 'Teatro', 'Actuación', 'Guion', 'Producción'],
+            ['Migración', 'Refugiado', 'Frontera', 'Asilo', 'Derechos humanos', 'Identidad', 'Exilio', 'Inclusión', 'Integración', 'Xenofobia']
+        ];
+
+
+        const ordenConjuntos = Array.from({ length: palabras.length }, (_, i) => i);
+        ordenConjuntos.sort(() => Math.random() - 0.5);
+
+        let conjuntoActualIndex = 0;
+        let palabraActualIndex = 0;
+        let ultimaPalabraMostrada = '';
+        let puntuacion = 0;
+
+        // Función para mostrar el modal de inicio
+        function mostrarModalInicio() {
+            document.getElementById('startModal').style.display = 'flex';
+        }
+
+        // Función para iniciar el juego al cerrar el modal de inicio
+        function iniciarJuego() {
+            document.getElementById('startModal').style.display = 'none';
+            reiniciarJuego();
+        }
+
+
+        function mostrarPalabraSiguiente() {
+            ementById('wordContainer');
+            wordContainer.text
+            const wordContainer = document.getElContent = palabras[ordenConjuntos[conjuntoActualIndex]][palabraActualIndex];
+            ultimaPalabraMostrada = palabras[ordenConjuntos[conjuntoActualIndex]][palabraActualIndex];
+            palabraActualIndex++;
+
+            if (palabraActualIndex < 3) {
+                setTimeout(() => {
+                    mostrarPalabraSiguiente();
+                }, 700);
+            } else if (palabraActualIndex === 3) {
+                setTimeout(() => {
+                    wordContainer.textContent = '';
+                    llenarBotonesConPalabras();
+                }, 700);
+            }
+        }
+
+        function llenarBotonesConPalabras() {
+            const optionsContainer = document.getElementById('optionsContainer');
+            const opciones = obtenerPalabrasAleatoriasConUltima(ultimaPalabraMostrada, palabras[ordenConjuntos[conjuntoActualIndex]], 4);
+            opciones.sort(() => Math.random() - 0.5);
+
+            const botones = optionsContainer.querySelectorAll('.option-button');
+            botones.forEach((boton, index) => {
+                boton.textContent = opciones[index];
+            });
+        }
+
+        function verificarRespuesta(respuestaUsuario) {
+            const palabraCorrecta = palabras[ordenConjuntos[conjuntoActualIndex]][2];
+            const audioElement = new Audio();
+
+            if (respuestaUsuario === palabraCorrecta) {
+                audioElement.src = 'https://cdn.freesound.org/previews/657/657948_6142149-lq.mp3';
+                audioElement.play();
+
+                puntuacion++;
+                document.getElementById('score').textContent = puntuacion;
+
+                if (puntuacion === 10) {
+                    // Mostrar modal de juego terminado
+                    document.getElementById('finalScore').textContent = puntuacion;
+                    document.getElementById('modal').style.display = 'flex';
+                } else {
+                    // Respuesta correcta, reinicia índice de palabra y avanza al siguiente conjunto
+                    palabraActualIndex = 0;
+                    conjuntoActualIndex = (conjuntoActualIndex + 1) % palabras.length;
+
+                    setTimeout(() => {
+                        mostrarPalabraSiguiente();
+                    }, 700);
+                }
+            } else {
+                audioElement.src = 'https://cdn.freesound.org/previews/173/173958_2437358-lq.mp3';
+                audioElement.play();
+
+                // Respuesta incorrecta, reinicia índice de palabra y avanza al siguiente conjunto
+                palabraActualIndex = 0;
+                conjuntoActualIndex = (conjuntoActualIndex + 1) % palabras.length;
+
+                setTimeout(() => {
+                    mostrarPalabraSiguiente();
+                }, 700);
+            }
+        }
+
+        function reiniciarJuego() {
+            // Ocultar modal de juego terminado
+            document.getElementById('modal').style.display = 'none';
+
+            // Reiniciar puntuación
+            puntuacion = 0;
+            document.getElementById('score').textContent = puntuacion;
+
+            // Reiniciar juego
+            palabraActualIndex = 0;
+            conjuntoActualIndex = 0;
+
+            setTimeout(() => {
+                mostrarPalabraSiguiente();
+            }, 700);
+        }
+
+        function obtenerPalabrasAleatoriasConUltima(ultimaPalabra, arr, cantidad) {
+            const copiaArr = arr.filter(palabra => palabra !== ultimaPalabra);
+            const resultados = [];
+
+            for (let i = 0; i < cantidad - 1; i++) {
+                const indice = Math.floor(Math.random() * copiaArr.length);
+                const palabra = copiaArr.splice(indice, 1)[0];
+                resultados.push(palabra);
+            }
+
+            resultados.push(ultimaPalabra);
+            return resultados;
+        }
+
+        // Comienza la secuencia al cargar la página
+        setTimeout(() => {
+            mostrarPalabraSiguiente();
+        }, 700);
+    </script>
+</body>
+
+</html>
