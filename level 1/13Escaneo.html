@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 20px;
+        height: 100vh;
+      }
+      #paragraph {
+        font-size: 18px;
+        margin-bottom: 20px;
+        cursor: pointer;
+      }
+      #counter {
+        font-size: 24px;
+        margin-top: 20px;
+      }
+
+      .word {
+        cursor: pointer;
+        display: inline-block;
+        margin-right: 5px; /* Espacio entre palabras */
+      }
+
+      .correct {
+        background-color: #8bc34a;
+        color: white;
+      }
+    </style>
+    <title>ESCANEO</title>
+  </head>
+  <body>
+    <div id="paragraph"></div>
+    <div id="counter">Contador: 0</div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Obtener elementos del DOM
+        const paragraph = document.getElementById("paragraph");
+        const counter = document.getElementById("counter");
+
+        // Definir el párrafo
+        const text =
+          "La luz es esencial para la vida. Sin luz, no podríamos ver ni disfrutar de la belleza que nos rodea. La luz del sol nos da energía y calor.La luz, ese fenómeno fascinante que ilumina nuestro mundo y da vida a todo lo que nos rodea, es uno de los elementos más fundamentales de nuestra existencia. Desde el amanecer radiante hasta el crepúsculo sereno, la luz nos envuelve con su manto cálido y dorado, marcando el ritmo de nuestras vidas.";
+
+        // Inicializar el contador
+        let count = 0;
+        counter.textContent = `Busca la palabra Luz ${count}`;
+
+        // Dividir el párrafo en palabras
+        const words = text.split(/\s+/);
+
+        // Crear el párrafo con palabras interactivas
+        paragraph.innerHTML = words
+          .map((word, index) => {
+            //const cleanedWord = word.replace(/[.,]/g, ''); // Eliminar puntos y comas
+            //return `<span class="word" data-index="${index}">${cleanedWord}</span> `;
+            return `<span class="word" data-index="${index}">${word}</span>`;
+          })
+          .join("");
+
+        // Agregar evento clic a cada palabra
+        const wordElements = document.getElementsByClassName("word");
+        for (const wordElement of wordElements) {
+          wordElement.addEventListener("click", function () {
+            const wordIndex = this.dataset.index;
+            const cleanedClickedWord = words[wordIndex].replace(/[.,]/g, ""); // Eliminar puntos y comas
+            if (cleanedClickedWord.toLowerCase() === "luz") {
+              // Incrementar el contador si la palabra es "luz"
+              count++;
+              counter.textContent = `Luz: (${count} de 5`;
+              // Cambiar el color de fondo de la palabra
+              this.classList.add("correct");
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
