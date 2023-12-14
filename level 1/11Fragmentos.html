@@ -1,4 +1,65 @@
-// Definición de Palabras y Variables Globales:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragmentos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #word-display{
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            color: rgb(18, 183, 167);
+            padding: 10px;
+        
+        }
+
+        .game-container {
+            text-align: center;
+        }
+
+        .option {
+            margin: 10px;
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+
+        .incorrect {
+            background-color: #f44336; /* Rojo */
+            
+        }
+
+
+        .correct {
+            background-color: #8bc34a; /* Verde */
+        }
+
+        .hidden {
+            display: none;
+        }
+                
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div id="word-display"></div>
+        <div id="options-container" class="hidden"></div>
+        <div id="congratulations" class="hidden"><h2>Felicitaciones, ¡has ganado!</h2></div>
+    </div>
+
+<script>
+    // Definición de Palabras y Variables Globales:
 const words = ["Victoria", "Programación", "Memoria", "Desarrollo", "JavaScript", "HTML", "CSS"];
     let currentWord;
     let timer;
@@ -68,3 +129,7 @@ const words = ["Victoria", "Programación", "Memoria", "Desarrollo", "JavaScript
 
     // Inicia el juego cuando la página se carga
     window.onload = startGame;
+
+</script>
+</body>
+</html>

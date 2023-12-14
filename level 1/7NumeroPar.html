@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+  
+  .container {
+    display: grid;
+    grid-template-columns: repeat(6, 50px);
+    grid-template-rows: repeat(6, 50px);
+    gap: 5px;
+  }
+  
+  .square {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    transition: background-color 0.3s;
+  }
+  
+  .square.correct {
+    background-color: #8bc34a; /* Verde */
+  }
+  
+  .square.incorrect {
+    background-color: #f44336; /* Rojo */
+  }
+  </style>
+  <title>Numero Par</title>
+</head>
+<body>
+  <div class="container" id="container"></div>
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('container');
+  
+    // Función para determinar si un número es par
+    function isEven(num) {
+      return num % 2 === 0;
+    }
+  
+    // Función para manejar el clic en un cuadrado
+    function handleClick(event) {
+      const square = event.target;
+      const number = parseInt(square.innerText);
+  
+      // Verificar si el número es par o impar y aplicar el estilo correspondiente
+      if (isEven(number)) {
+        square.classList.add('correct');
+      } else {
+        square.classList.add('incorrect');
+      }
+  
+      // Deshabilitar el clic después de revelar el número
+      square.removeEventListener('click', handleClick);
+    }
+  
+    // Crear y agregar los cuadrados al contenedor
+    for (let i = 0; i < 6; i++) {
+      for (let j = 0; j < 6; j++) {
+        const randomNumber = Math.floor(Math.random() * 101); // Números del 0 al 100
+        const square = document.createElement('div');
+        square.classList.add('square');
+        square.innerText = randomNumber;
+        square.addEventListener('click', handleClick);
+        container.appendChild(square);
+      }
+    }
+  });
+  
+</script>
+</body>
+</html>
