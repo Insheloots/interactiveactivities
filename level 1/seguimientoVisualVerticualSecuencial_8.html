@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento visual secuencial vertical</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="font-poppins flex items-center justify-center flex-col h-screen m-0 bg-neutral-100">
+    <!-- Modal de inicio -->
+    <div id="startModal"
+        class="fixed top-0 left-0 w-full h-full bg-neutral-800 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-8 rounded shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4 text-sky-600">¡Bienvenido a Seguimiento Visual Vertical!</h2>
+            <p class="text-lg mb-4">Presiona el botón para comenzar el juego.</p>
+            <button
+                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 font-semibold py-2 px-4 rounded-lg"
+                onclick="iniciarJuego()">Comenzar Juego</button>
+        </div>
+    </div>
+
+    <div id="grid" class="grid grid-cols-10 gap-2 mt-8"></div>
+
+
+
+    <!-- Modal de juego terminado -->
+    <div id="modal"
+        class="fixed top-0 left-0 w-full h-full bg-neutral-800 bg-opacity-50 hidden flex justify-center items-center">
+        <div class="bg-white p-8 rounded shadow-md text-center">
+            <h2 class="text-3xl font-bold mb-4 text-sky-600">¡Felicidades juego terminado!</h2>
+            <button
+                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 font-semibold py-2 px-4 rounded-lg"
+                onclick="reiniciarJuego()">Reiniciar Juego</button>
+        </div>
+    </div>
+
+
+    <script>
+
+        function llenarCuadricula() {
+            // Obtener la referencia a la cuadrícula
+            const gridElement = document.getElementById('grid');
+
+            // Definir los patrones de números para cada fila
+            const patterns = [
+                Array.from({ length: 10 }, (_, i) => 82 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 62 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 41 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 21 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 1 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 2 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 22 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 42 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 61 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 81 + i * 2)
+            ];
+
+            // Llenar la cuadrícula con los patrones
+            patterns.forEach(pattern => {
+                pattern.forEach(number => {
+                    const cell = document.createElement('div');
+                    cell.className = 'w-10 h-10 bg-gray-300 flex items-center justify-center border';
+                    cell.textContent = number;
+                    gridElement.appendChild(cell);
+                });
+            });
+        }
+
+        function iluminarFila5() {
+            // Definir el orden específico de iluminación
+            const ordenIluminacion = [41, 51, 42, 52, 43, 53, 44, 54, 45, 55, 46, 56, 47, 57, 48, 58, 49, 59, 50, 60,
+                31, 61, 32, 62, 33, 63, 34, 64, 35, 65, 36, 66, 37, 67, 38, 68, 39, 69, 40, 70,
+                21, 71, 22, 72, 23, 73, 24, 74, 25, 75, 26, 76, 27, 77, 28, 78, 29, 79, 30, 80,
+                11, 81, 12, 82, 13, 83, 14, 84, 15, 85, 16, 86, 17, 87, 18, 88, 19, 89, 20, 90,
+                1, 91, 2, 92, 3, 93, 4, 94, 5, 95, 6, 96, 7, 97, 8, 98, 9, 99, 10, 100];
+
+            // Obtener los elementos de la quinta fila en el orden especificado
+            const fila5Elements = ordenIluminacion.map(posicion => document.querySelector(`.grid > div:nth-child(${posicion})`));
+
+            // Iterar sobre los elementos y aplicar la iluminación secuencial
+            fila5Elements.forEach((cell, index) => {
+                setTimeout(() => {
+                    // Cambiar el color del borde
+                    cell.style.border = '2px solid #1d4ed8';
+
+                    // Después de cierto tiempo, revertir el cambio
+                    setTimeout(() => {
+                        cell.style.border = ''; // Esto eliminará el estilo del borde
+                    }, 200); // Puedes ajustar el tiempo de espera para revertir el cambio
+                }, index * 200); // El intervalo de tiempo entre cambios (ajustable)
+            });
+
+            setTimeout(() => {
+                mostrarModalJuegoTerminado();
+            }, 20000)
+
+        }
+
+
+
+
+
+        // Función para mostrar el modal de inicio
+        function mostrarModalInicio() {
+            document.getElementById('startModal').style.display = 'flex';
+        }
+
+        // Función para iniciar el juego al cerrar el modal de inicio
+        function iniciarJuego() {
+            document.getElementById('startModal').style.display = 'none';
+            iluminarFila5();
+        }
+
+        // Función para mostrar el modal de juego terminado
+        function mostrarModalJuegoTerminado() {
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        // Función para reiniciar el juego
+        function reiniciarJuego() {
+            document.getElementById('modal').style.display = 'none';
+            iluminarFila5();
+        }
+
+        // Llama a la función al cargar la página
+        window.onload = function () {
+            llenarCuadricula();
+        }
+
+    </script>
+</body>
+
+</html>
