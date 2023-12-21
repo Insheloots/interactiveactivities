@@ -1,92 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-  }
-  
-  .container {
-    display: grid;
-    grid-template-columns: repeat(6, 50px);
-    grid-template-rows: repeat(6, 50px);
-    gap: 5px;
-  }
-  
-  .square {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    transition: background-color 0.3s;
-  }
-  
-  .square.correct {
-    background-color: #8bc34a; /* Verde */
-  }
-  
-  .square.incorrect {
-    background-color: #f44336; /* Rojo */
-  }
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(6, 50px);
+      grid-template-rows: repeat(6, 50px);
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+      max-width: 350px;
+      /* Ajusta el ancho máximo según tus necesidades */
+    }
+
+    .square {
+      /* Mantén los estilos existentes para los cuadrados */
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      transition: background-color 0.3s;
+    }
+
+    .square.correct {
+      background-color: #22c55e;
+      /* Verde */
+    }
+
+    .square.incorrect {
+      background-color: #ef4444;
+      /* Rojo */
+    }
   </style>
   <title>Numero Par</title>
 </head>
+
 <body>
+
+  <!-- Modal de inicio -->
+  <div id="startModal"
+    class="fixed top-0 left-0 w-full h-full bg-neutral-800 bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white p-8 rounded shadow-md text-center">
+      <h2 class="text-3xl font-bold mb-4 text-sky-600">¡Bienvenido a Número Par!</h2>
+      <p class="text-lg mb-4">Presiona el botón para comenzar el juego.</p>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded"
+        onclick="iniciarJuego()">Comenzar Juego</button>
+    </div>
+  </div>
   <div class="container" id="container"></div>
 
+  <!-- Contador de puntuación -->
+  <div id="scoreContainer"
+    class="absolute top-4 right-4 text-lg font-semibold text-white bg-sky-600 p-2 rounded shadow">
+    Puntuación: <span id="score" class="ml-2">0</span>
+  </div>
 
-<script>
+  <!-- Modal de juego terminado -->
+  <div id="modal"
+    class="fixed top-0 left-0 w-full h-full bg-neutral-800 bg-opacity-50 hidden flex justify-center items-center">
+    <div class="bg-white p-8 rounded shadow-md text-center">
+      <h2 class="text-3xl font-bold mb-4 text-sky-600">¡Felicidades! Juego terminado!</h2>
+      <p class="text-lg mb-4">Puntuación: <span id="finalScore">0</span></p>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded"
+        onclick="reiniciarJuego()">Reiniciar Juego</button>
+    </div>
+  </div>
 
-document.addEventListener('DOMContentLoaded', function() {
-    const container = document.getElementById('container');
-  
-    // Función para determinar si un número es par
-    function isEven(num) {
-      return num % 2 === 0;
-    }
-  
-    // Función para manejar el clic en un cuadrado
-    function handleClick(event) {
-      const square = event.target;
-      const number = parseInt(square.innerText);
-  
-      // Verificar si el número es par o impar y aplicar el estilo correspondiente
-      if (isEven(number)) {
-        square.classList.add('correct');
-      } else {
-        square.classList.add('incorrect');
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const container = document.getElementById('container');
+      let score = 0;
+
+      // Función para determinar si un número es par
+      function isEven(num) {
+        return num % 2 === 0;
       }
-  
-      // Deshabilitar el clic después de revelar el número
-      square.removeEventListener('click', handleClick);
-    }
-  
-    // Crear y agregar los cuadrados al contenedor
-    for (let i = 0; i < 6; i++) {
-      for (let j = 0; j < 6; j++) {
-        const randomNumber = Math.floor(Math.random() * 101); // Números del 0 al 100
-        const square = document.createElement('div');
-        square.classList.add('square');
-        square.innerText = randomNumber;
-        square.addEventListener('click', handleClick);
-        container.appendChild(square);
+
+      // Función para manejar el clic en un cuadrado
+      function handleClick(event) {
+        const square = event.target;
+        const number = parseInt(square.innerText);
+
+        // Verificar si el número es par o impar y aplicar el estilo correspondiente
+        if (isEven(number)) {
+          square.classList.add('correct');
+        } else {
+          square.classList.add('incorrect');
+        }
+
+        // Deshabilitar el clic después de revelar el número
+        square.removeEventListener('click', handleClick);
+
+        // Verificar si todos los números pares han sido clicados
+        if (checkAllEvenClicked()) {
+          // Reiniciar el juego generando nuevos números aleatorios
+          resetGame();
+        }
       }
+
+      // Función para verificar si todos los números pares han sido clicados
+      function checkAllEvenClicked() {
+        const squares = document.querySelectorAll('.square');
+        for (const square of squares) {
+          const number = parseInt(square.innerText);
+          if (isEven(number) && !square.classList.contains('correct')) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      // Función para reiniciar el juego generando nuevos números aleatorios
+      function resetGame() {
+        const squares = document.querySelectorAll('.square');
+        for (const square of squares) {
+          square.innerText = Math.floor(Math.random() * 101); // Números del 0 al 100
+          square.classList.remove('correct', 'incorrect');
+          square.addEventListener('click', handleClick);
+        }
+
+        // Incrementar el contador
+        score++;
+
+        // Actualizar el marcador de puntuación
+        document.getElementById('score').innerText = score;
+
+        // Verificar si el juego ha terminado (contador llega a 10)
+        if (score === 10) {
+          document.getElementById('finalScore').textContent = score;
+          mostrarModalFinJuego();
+        }
+      }
+
+      // Crear y agregar los cuadrados al contenedor
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
+          const randomNumber = Math.floor(Math.random() * 101); // Números del 0 al 100
+          const square = document.createElement('div');
+          square.classList.add('square');
+          square.innerText = randomNumber;
+          square.addEventListener('click', handleClick);
+          container.appendChild(square);
+        }
+      }
+    });
+
+
+
+    // Función para mostrar el modal de inicio
+    function mostrarModalInicio() {
+      document.getElementById('startModal').style.display = 'flex';
     }
-  });
-  
-</script>
+
+    // Función para iniciar el juego al cerrar el modal de inicio
+    function iniciarJuego() {
+      document.getElementById('startModal').style.display = 'none';
+      reiniciarJuego();
+    }
+
+
+    function mostrarModalFinJuego() {
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    // Reinicia el juego
+    function reiniciarJuego() {
+      // Restablecer el contador a cero
+      score = 0;
+      document.getElementById('score').textContent = score;
+
+      // Ocultar el modal de juego terminado
+      document.getElementById('modal').style.display = 'none';
+
+      // Reiniciar el juego generando nuevos números aleatorios
+      resetGame();
+    }
+  </script>
 </body>
+
 </html>
