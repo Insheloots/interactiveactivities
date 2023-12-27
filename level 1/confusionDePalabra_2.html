@@ -11,14 +11,42 @@
 </head>
 
 <body class="font-poppins flex items-center justify-center flex-col h-screen m-0 bg-neutral-100">
-    <div id="startModal"
-        class="fixed top-0 left-0 w-full h-full bg-neutral-800 bg-opacity-50 flex justify-center items-center">
-        <div class="bg-white p-8 rounded shadow-md text-center">
-            <h2 class="text-3xl font-bold mb-4 text-sky-600">¡Bienvenido a Confusión de Palabra!</h2>
-            <p class="text-lg mb-4">Presiona el botón para comenzar el juego.</p>
-            <button
-                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 font-semibold py-2 px-4 rounded-lg"
-                onclick="iniciarJuego()">Comenzar Juego</button>
+
+    <!-- Modal de inicio -->
+    <div id="backgroundModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div id="startModal"
+                class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+
+                <div
+                    class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <!-- Panel del modal -->
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <!-- Título en la parte superior -->
+                        <h2 class="text-xl text-center font-bold mb-6 text-sky-600">¡Bienvenido a Seguimiento Visual
+                            Vertical!</h2>
+                        <!-- Contenido del modal -->
+                        <div class="sm:flex sm:items-start">
+                            <!-- Objetivo e Instrucciones en la parte inferior -->
+                            <div class="flex flex-col items-start mb-10">
+                                <p class="text-base text-justify m-1"><span class="font-bold">Objetivo: </span>Estimular
+                                    la capacidad de atención y concentración.</p>
+                                <p class="text-base text-justify m-1"><span class="font-bold">Instrucciones: </span>En
+                                    la siguiente actividad selecciona el recuadro que contenga el nombre del color en el
+                                    que está escrita la palabra del recuadro ubicado en la parte superior. Realiza la
+                                    actividad en el menor tiempo posible.</p>
+                            </div>
+                        </div>
+                        <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+                        <div class="flex justify-center">
+                            <button
+                                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                                onclick="iniciarJuego()">Comenzar Juego</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
@@ -49,15 +77,30 @@
         class="absolute top-4 right-4 text-lg font-semibold bg-gray-950 text-gray-300 p-2 rounded-lg shadow">
         Puntuación: <span id="puntos" class="ml-2">0</span>
     </div>
+
     <!-- Modal de juego terminado -->
-    <div id="modal"
-        class="fixed top-0 left-0 w-full h-full bg-neutral-800 bg-opacity-50 hidden flex justify-center items-center">
-        <div class="bg-white p-8 rounded shadow-md text-center">
-            <h2 class="text-3xl font-bold mb-4 text-sky-600">¡Felicidades! Juego terminado</h2>
-            <p class="text-lg mb-4">Puntuación: <span id="finalScore">0</span></p>
-            <button
-                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 font-semibold py-2 px-4 rounded-lg"
-                onclick="reiniciarJuego()">Reiniciar Juego</button>
+    <div id="endBackgroundModal" class="fixed hidden inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div id="endModal"
+                class="flex hidden min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+
+                <div
+                    class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <!-- Panel del modal -->
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <!-- Título en la parte superior -->
+                        <h2 class="text-xl text-center font-bold mb-6 text-sky-600">¡Felicidades actividad terminada!
+                        </h2>
+                        <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+                        <div class="flex justify-center">
+                            <button
+                                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                                onclick="reiniciarJuego()">Reiniciar actividad</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
@@ -71,10 +114,20 @@
             cyan: "Cyan",
             gray: "Gris",
             pink: "Rosado",
-            brown: "Marrón"
+            brown: "Marrón",
+            white: "Blanco",
+            black: "Negro",
+            yellow: "Amarillo",
+            turquoise: "Turquesa",
+            violet: "Violeta",
+            olive: "Oliva",
+            coral: "Coral",
+            silver: "Plata",
+            gold: "Oro",
+            lavender: "Lavanda"
         };
 
-        const nombreColores = ["Rosado", "Amarillo", "Marrón", "Gris", "Cyan", "Verde", "Rojo", "Azul", "Naranja", "Morado"];
+        const nombreColores = ['Blanco', 'Negro', 'Gris', 'Rojo', 'Azul', 'Verde', 'Amarillo', 'Naranja', 'Rosado', 'Morado', 'Marrón', 'Beige', 'Celeste', 'Turquesa', 'Cyan', 'Violeta', 'Lila', 'Topo', 'Mostaza', 'Oliva', 'Esmeralda', 'Carmesí', 'Granate', 'Zafiro', 'Cobalto', 'Plata', 'Platino', 'Coral', 'Marfil'];
 
         let coloresRestantes = Object.values(colores);
         let puntos = 0;
@@ -82,20 +135,43 @@
         // Función para mostrar el modal de inicio
         function mostrarModalInicio() {
             document.getElementById('startModal').style.display = 'flex';
+            document.getElementById("backgroundModal").style.display = 'flex';
         }
 
         // Función para iniciar el juego al cerrar el modal de inicio
         function iniciarJuego() {
             document.getElementById('startModal').style.display = 'none';
+            document.getElementById("backgroundModal").style.display = 'none';
             cambiarColor();
         }
 
-        function obtenerColorAleatorioSinRepetir() {
+        // Función para mostrar el modal de juego terminado
+        function mostrarModalJuegoTerminado() {
+            document.getElementById('endModal').style.display = 'flex';
+            document.getElementById("endBackgroundModal").style.display = 'flex';
+        }
+
+        // Función para reiniciar el juego
+        function reiniciarJuego() {
+            document.getElementById('endModal').style.display = 'none';
+            document.getElementById("endBackgroundModal").style.display = 'none';
+            puntos = 0;
+            document.getElementById("puntos").textContent = `${puntos}`;
+            cambiarColor();
+        }
+
+        function obtenerColorAleatorioSinRepetir(excluirColor = null) {
             if (coloresRestantes.length === 0) {
                 coloresRestantes = Object.values(colores);
             }
 
-            const indiceAleatorio = Math.floor(Math.random() * coloresRestantes.length);
+            let indiceAleatorio;
+
+            // Obtener un índice diferente al color excluido
+            do {
+                indiceAleatorio = Math.floor(Math.random() * coloresRestantes.length);
+            } while (coloresRestantes[indiceAleatorio] === excluirColor);
+
             return coloresRestantes.splice(indiceAleatorio, 1)[0];
         }
 
@@ -116,7 +192,7 @@
 
                 // Evitar que el color especial se repita en los botones
                 do {
-                    colorBoton = obtenerColorAleatorioSinRepetir();
+                    colorBoton = obtenerColorAleatorioSinRepetir(colorEspecialActual);
                 } while (colorBoton === colorEspecialActual);
 
                 button.textContent = colores[colorBoton];
@@ -148,7 +224,7 @@
 
             const botones = document.querySelectorAll(".colorButton");
             botones.forEach(button => {
-                button.textContent = obtenerColorAleatorioSinRepetir();
+                button.textContent = obtenerColorAleatorioSinRepetir(document.getElementById("colorEspecial").textContent);
             });
 
             document.getElementById("colorEspecial").textContent = colores[h1Elemento.style.color];
@@ -165,20 +241,6 @@
             if (puntos === 10) {
                 mostrarModalJuegoTerminado();
             }
-        }
-
-        // Función para mostrar el modal de juego terminado
-        function mostrarModalJuegoTerminado() {
-            document.getElementById('modal').style.display = 'flex';
-            document.getElementById('finalScore').textContent = `${puntos}`;
-        }
-
-        // Función para reiniciar el juego
-        function reiniciarJuego() {
-            document.getElementById('modal').style.display = 'none';
-            puntos = 0;
-            document.getElementById("puntos").textContent = `${puntos}`;
-            cambiarColor();
         }
     </script>
 </body>
