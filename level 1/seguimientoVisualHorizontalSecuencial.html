@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento Visual Horizontal Secuencial</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="font-poppins flex items-center justify-center flex-col h-screen m-0 bg-neutral-100">
+
+    <!-- Modal de inicio -->
+    <div id="backgroundModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div id="startModal"
+                class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+
+                <div
+                    class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <!-- Panel del modal -->
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <!-- Título en la parte superior -->
+                        <h2 class="text-xl text-center font-bold mb-6 text-sky-600">¡Bienvenido a Seguimiento Visual
+                            Vertical!</h2>
+                        <!-- Contenido del modal -->
+                        <div class="sm:flex sm:items-start">
+                            <!-- Objetivo e Instrucciones en la parte inferior -->
+                            <div class="flex flex-col items-start mb-10">
+                                <p class="text-base text-justify m-1"><span class="font-bold">Objetivo: </span>Mejorar
+                                    la atención y concentración mediante el seguimiento visual de los elementos en
+                                    aparición secuencial.</p>
+                                <p class="text-base text-justify m-1"><span class="font-bold">Instrucciones:
+                                    </span>Observe los elementos que se van indicando horizontalmente.</p>
+                            </div>
+                        </div>
+                        <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+                        <div class="flex justify-center">
+                            <button
+                                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                                onclick="iniciarJuego()">Comenzar Juego</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido -->
+    <div id="grid" class="grid grid-cols-10 gap-2 mt-8"></div>
+
+
+
+    <!-- Modal de juego terminado -->
+    <div id="endBackgroundModal" class="fixed hidden inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div id="endModal"
+                class="flex hidden min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+
+                <div
+                    class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <!-- Panel del modal -->
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <!-- Título en la parte superior -->
+                        <h2 class="text-xl text-center font-bold mb-6 text-sky-600">¡Felicidades actividad terminada!
+                        </h2>
+                        <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+                        <div class="flex justify-center">
+                            <button
+                                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                                onclick="reiniciarJuego()">Reiniciar actividad</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        function llenarCuadricula() {
+            // Obtener la referencia a la cuadrícula
+            const gridElement = document.getElementById('grid');
+
+            // Definir los patrones de números para cada fila
+            const patterns = [
+                Array.from({ length: 10 }, (_, i) => 82 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 62 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 41 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 21 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 1 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 2 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 22 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 42 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 61 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 81 + i * 2)
+            ];
+
+            // Llenar la cuadrícula con los patrones
+            patterns.forEach(pattern => {
+                pattern.forEach(number => {
+                    const cell = document.createElement('div');
+                    cell.className = 'w-10 h-10 bg-gray-300 flex items-center justify-center border';
+                    cell.textContent = number;
+                    gridElement.appendChild(cell);
+                });
+            });
+        }
+
+        function iluminarFila5() {
+            // Definir el orden específico de iluminación
+            const ordenIluminacion = [5, 6, 15, 16, 25, 26, 35, 36, 45, 46, 55, 56, 65, 66, 75, 76, 85, 86, 95, 96,
+                4, 7, 14, 17, 24, 27, 34, 37, 44, 47, 54, 57, 64, 67, 74, 77, 84, 87, 94, 97,
+                3, 8, 13, 18, 23, 28, 33, 38, 43, 48, 53, 58, 63, 68, 73, 78, 83, 88, 93, 98,
+                2, 9, 12, 19, 22, 29, 32, 39, 42, 49, 52, 59, 62, 69, 72, 79, 82, 89, 92, 99,
+                1, 10, 11, 20, 21, 30, 31, 40, 41, 50, 51, 60, 61, 70, 71, 80, 81, 90, 91, 100];
+
+            // Obtener los elementos de la quinta fila en el orden especificado
+            const fila5Elements = ordenIluminacion.map(posicion => document.querySelector(`.grid > div:nth-child(${posicion})`));
+
+            // Iterar sobre los elementos y aplicar la iluminación secuencial
+            fila5Elements.forEach((cell, index) => {
+                setTimeout(() => {
+                    // Cambiar el color del borde
+                    cell.style.border = '2px solid #1d4ed8';
+
+                    // Después de cierto tiempo, revertir el cambio
+                    setTimeout(() => {
+                        cell.style.border = ''; // Esto eliminará el estilo del borde
+                    }, 200); // Tiempo de cambio
+                }, index * 400); // El intervalo de tiempo entre cambios (ajustable)
+            });
+
+            setTimeout(() => {
+                mostrarModalJuegoTerminado();
+            }, 40000)
+
+        }
+
+
+
+
+
+        // Función para mostrar el modal de inicio
+        function mostrarModalInicio() {
+            document.getElementById('startModal').style.display = 'flex';
+        }
+
+        // Función para iniciar el juego al cerrar el modal de inicio
+        function iniciarJuego() {
+            document.getElementById('startModal').style.display = 'none';
+            document.getElementById('backgroundModal').style.display = 'none';
+            iluminarFila5();
+        }
+
+        // Función para mostrar el modal de juego terminado
+        function mostrarModalJuegoTerminado() {
+            document.getElementById('endModal').style.display = 'flex';
+            document.getElementById('endBackgroundModal').style.display = 'flex';
+        }
+
+        // Función para reiniciar el juego
+        function reiniciarJuego() {
+            document.getElementById('endModal').style.display = 'none';
+            document.getElementById('endBackgroundModal').style.display = 'none';
+            iluminarFila5();
+        }
+
+        // Llama a la función al cargar la página
+        window.onload = function () {
+            llenarCuadricula();
+        }
+    </script>
+</body>
+
+</html>

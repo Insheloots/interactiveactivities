@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Lineas Verticales</title>
+</head>
+
+<body class="flex items-center justify-center h-screen bg-gray-100 font-poppins">
+
+    <!-- Modal de inicio -->
+    <div id="backgroundModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div id="startModal"
+                class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+
+                <div
+                    class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <!-- Panel del modal -->
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <!-- Título en la parte superior -->
+                        <h2 class="text-xl text-center font-bold mb-6 text-sky-600">¡Bienvenido a Seguimiento Visual
+                            Vertical!</h2>
+                        <!-- Contenido del modal -->
+                        <div class="sm:flex sm:items-start">
+                            <!-- Objetivo e Instrucciones en la parte inferior -->
+                            <div class="flex flex-col items-start mb-10">
+                                <p class="text-base text-justify m-1"><span class="font-bold">Objetivo: </span>Mejorar
+                                    la atención y concentración mediante el seguimiento visual de los elementos en
+                                    aparición secuencial.</p>
+                                <p class="text-base text-justify m-1"><span class="font-bold">Instrucciones:
+                                    </span>Observe los elementos que se van indicando horizontalmente.</p>
+                            </div>
+                        </div>
+                        <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+                        <div class="flex justify-center">
+                            <button
+                                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                                onclick="iniciarJuego()">Comenzar Actividad</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="flex items-center font-medium text-lg" id="columnContainer">
+        <div class="bg-gray-500 h-24 w-5 m-2"></div>
+        <div class="bg-gray-500 h-24 w-5 m-2"></div>
+    </div>
+
+    <!-- Modal de juego terminado -->
+    <div id="endBackgroundModal" class="fixed hidden inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div id="endModal"
+                class="flex hidden min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+
+                <div
+                    class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <!-- Panel del modal -->
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <!-- Título en la parte superior -->
+                        <h2 class="text-xl text-center font-bold mb-6 text-sky-600">¡Felicidades actividad terminada!
+                        </h2>
+                        <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+                        <div class="flex justify-center">
+                            <button
+                                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                                onclick="reiniciarJuego()">Reiniciar actividad</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Obtiene el contenedor de las columnas
+        const columnContainer = document.getElementById('columnContainer');
+        let intervalId;
+        // Inicializa la altura base
+        let alturaBase = 150;
+
+        // Función para agregar hijos a las columnas
+        function agregarHijos() {
+            // Elimina las letras de la columna anterior
+            const letrasAnteriores = document.querySelectorAll('#columnContainer p');
+            letrasAnteriores.forEach(letra => letra.remove());
+
+            const nuevoHijoIzquierda = document.createElement('div');
+            const textHijoIzquierda = document.createElement('p');
+            nuevoHijoIzquierda.className = 'bg-blue-500 w-5 m-2'; // Establece clases de Tailwind para el estilo
+            textHijoIzquierda.textContent = 'Ñ Ñ Ñ';
+
+            // Ajusta la altura para la nueva columna
+            nuevoHijoIzquierda.style.height = `${alturaBase}px`;
+            columnContainer.insertBefore(nuevoHijoIzquierda, columnContainer.firstChild);
+            columnContainer.insertBefore(textHijoIzquierda, columnContainer.firstChild);
+
+            const nuevoHijoDerecha = document.createElement('div');
+            const textHijoDerecha = document.createElement('p');
+            nuevoHijoDerecha.className = 'bg-blue-500 w-5 m-2'; // Establece clases de Tailwind para el estilo
+            textHijoDerecha.textContent = 'E E E';
+
+            // Ajusta la altura para la nueva columna
+            nuevoHijoDerecha.style.height = `${alturaBase}px`;
+            columnContainer.appendChild(nuevoHijoDerecha);
+            columnContainer.appendChild(textHijoDerecha);
+
+            // Incrementa la altura base para la próxima columna
+            alturaBase += 40;
+        }
+
+        function limpiarColumnas() {
+            const columnas = document.querySelectorAll('#columnContainer div');
+            columnas.forEach(columna => columna.remove());
+            alturaBase = 150; // Reinicia la altura base
+        }
+
+        // Función para iniciar el juego al cerrar el modal de inicio
+        function iniciarJuego() {
+            document.getElementById('startModal').style.display = 'none';
+            document.getElementById('backgroundModal').style.display = 'none';
+            limpiarColumnas();
+            agregarHijos();
+            intervalId = setInterval(agregarHijos, 1000);
+
+            // Detén la generación después de 8 segundos
+            setTimeout(function () {
+                clearInterval(intervalId);
+                mostrarModalJuegoTerminado();
+            }, 7000);
+        }
+
+        // Función para mostrar el modal de juego terminado
+        function mostrarModalJuegoTerminado() {
+            document.getElementById('endModal').style.display = 'flex';
+            document.getElementById('endBackgroundModal').style.display = 'flex';
+        }
+
+        // Función para reiniciar el juego
+        function reiniciarJuego() {
+            document.getElementById('endModal').style.display = 'none';
+            document.getElementById('endBackgroundModal').style.display = 'none';
+            iniciarJuego();
+        }
+    </script>
+</body>
+
+</html>
