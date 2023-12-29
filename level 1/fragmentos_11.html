@@ -1,135 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fragmentos</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
 
-        #word-display{
-            cursor: pointer;
-            font-family: 'Arial', sans-serif;
-            font-size: 24px;
-            color: rgb(18, 183, 167);
-            padding: 10px;
-        
-        }
+      #word-display {
+        cursor: pointer;
+        font-family: "Arial", sans-serif;
+        font-size: 24px;
+        color: rgb(18, 183, 167);
+        padding: 10px;
+      }
 
-        .game-container {
-            text-align: center;
-        }
+      .game-container {
+        text-align: center;
+      }
 
-        .option {
-            margin: 10px;
-            padding: 15px;
-            font-size: 18px;
-            cursor: pointer;
-        }
+      .option {
+        margin: 10px;
+        padding: 15px;
+        font-size: 18px;
+        cursor: pointer;
+      }
 
+      .incorrect {
+        background-color: #f44336; /* Rojo */
+      }
 
-        .incorrect {
-            background-color: #f44336; /* Rojo */
-            
-        }
+      .correct {
+        background-color: #8bc34a; /* Verde */
+      }
 
-
-        .correct {
-            background-color: #8bc34a; /* Verde */
-        }
-
-        .hidden {
-            display: none;
-        }
-                
+      .hidden {
+        display: none;
+      }
     </style>
-</head>
-<body>
-    <div class="game-container">
-        <div id="word-display"></div>
-        <div id="options-container" class="hidden"></div>
-        <div id="congratulations" class="hidden"><h2>Felicitaciones, ¡has ganado!</h2></div>
+  </head>
+  <body>
+    <!-- Modal de inicio -->
+    <div
+      id="backgroundModal"
+      class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+    >
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          id="startModal"
+          class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        >
+          <div
+            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+          >
+            <!-- Panel del modal -->
+            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <!-- Título en la parte superior -->
+              <h2 class="text-xl text-center font-bold mb-6 text-sky-600">
+                ¡Bienvenido a Fragmentos!
+              </h2>
+              <!-- Contenido del modal -->
+              <div class="sm:flex sm:items-start">
+                <!-- Objetivo e Instrucciones en la parte inferior -->
+                <div class="flex flex-col items-start mb-10">
+                  <p class="text-base text-justify m-1">
+                    <span class="font-bold">Objetivo: </span>Reforzar la
+                    atención mediante el ejercicio de lectura y selección.
+                  </p>
+                  <p class="text-base text-justify m-1">
+                    <span class="font-bold">Instrucciones: </span>Seleccione en
+                    la lista la palabra que contiene el fragmento indicado en el
+                    menor tiempo posible.
+                  </p>
+                </div>
+              </div>
+              <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+              <div class="flex justify-center">
+                <button
+                  class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                  onclick="iniciarJuego()"
+                >
+                  Comenzar Juego
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-<script>
-    // Definición de Palabras y Variables Globales:
-const words = ["Victoria", "Programación", "Memoria", "Desarrollo", "JavaScript", "HTML", "CSS"];
-    let currentWord;
-    let timer;
+    <div class="game-container">
+      <div id="word-display"></div>
+      <div id="options-container" class="hidden"></div>
+      <div id="congratulations" class="hidden">
+        <h2>Felicitaciones, ¡has ganado!</h2>
+      </div>
+    </div>
 
-    // Remueve la clase 'hidden' del contenedor de opciones
-    function startGame() {
-        document.getElementById('options-container').classList.remove('hidden');
+    <!-- Contador de puntuación -->
+    <div
+      id="scoreContainer"
+      class="absolute top-4 right-4 text-lg font-semibold text-white bg-sky-600 p-2 rounded shadow"
+    >
+      Puntuación: <span id="score" class="ml-2">0</span>
+    </div>
+
+    <!-- Modal de juego terminado -->
+    <div
+      id="endBackgroundModal"
+      class="fixed hidden inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+    >
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          id="endModal"
+          class="flex hidden min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        >
+          <div
+            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+          >
+            <!-- Panel del modal -->
+            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <!-- Título en la parte superior -->
+              <h2 class="text-xl text-center font-bold mb-6 text-sky-600">
+                ¡Felicidades actividad terminada!
+              </h2>
+              <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+              <div class="flex justify-center">
+                <button
+                  class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                  onclick="reiniciarJuego()"
+                >
+                  Reiniciar actividad
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+      // Definición de Palabras y Variables Globales:
+      const words = [
+        "Victoria",
+        "Programación",
+        "Memoria",
+        "Desarrollo",
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "Innovación",
+        "Algoritmo",
+        "Plataforma",
+        "Inteligencia",
+        "Aprendizaje",
+        "Código",
+        "Framework",
+        "Interfaz",
+        "Repositorio",
+        "Aplicación",
+        "Optimización",
+        "Seguridad",
+        "Navegador",
+        "Arquitectura",
+        "Compatibilidad",
+        "Eficiencia",
+        "Recursividad",
+        "Paradigma",
+        "Funcionalidad",
+        "Experiencia",
+        "Modularidad",
+        "Prototipo",
+      ];
+      shuffleArray(words);
+      let currentWord;
+      let timer;
+      let puntuacion = 0;
+
+      // Remueve la clase 'hidden' del contenedor de opciones
+      function startGame() {
+        document.getElementById("options-container").classList.remove("hidden");
         //document.getElementById('congratulations').classList.add('hidden');
         pickRandomWord();
         displayOptions();
-         // Inicia un temporizador
+        // Inicia un temporizador
         startTimer();
-    }
+      }
 
-    // Selecciona una palabra aleatoria del array words.
-    // Muestra la palabra seleccionada en el elemento con id 'word-display'
-    function pickRandomWord() {
+      // Selecciona una palabra aleatoria del array words.
+      // Muestra la palabra seleccionada en el elemento con id 'word-display'
+      function pickRandomWord() {
         currentWord = words[Math.floor(Math.random() * words.length)];
-        document.getElementById('word-display').textContent = currentWord;
-    }
+        document.getElementById("word-display").textContent = currentWord;
+      }
 
-    // Baraja las palabras para presentarlas en orden aleatorio.
-    function displayOptions() {
-        const optionsContainer = document.getElementById('options-container');
+      // Baraja las palabras para presentarlas en orden aleatorio.
+      function displayOptions() {
+        const optionsContainer = document.getElementById("options-container");
         optionsContainer.innerHTML = "";
 
-        // crea una copia de words y genera un numero aleatorio 
-        const shuffledWords = [...words].sort(() => Math.random() - 0.5);
-        // agrega las palabras al contenedor y agrega un evento click 
-        shuffledWords.forEach(word => {
-            const optionElement = document.createElement('div');
-            optionElement.textContent = word;
-            optionElement.classList.add('option');
-            optionElement.addEventListener('click', () => checkAnswer(word, optionElement));
-            optionsContainer.appendChild(optionElement);
-        });
-    }
+        // Muestra solo las primeras 9 palabras y la palabra actual
+        const optionsToShow = [...words.slice(0, 7), currentWord];
 
-    function checkAnswer(selectedWord, optionElement) {
+        shuffleArray(optionsToShow);
+
+        optionsToShow.forEach((word) => {
+          const optionElement = document.createElement("div");
+          optionElement.textContent = word;
+          optionElement.classList.add("option");
+          optionElement.addEventListener("click", () =>
+            checkAnswer(word, optionElement)
+          );
+          optionsContainer.appendChild(optionElement);
+        });
+      }
+
+      function checkAnswer(selectedWord, optionElement) {
         // Limpiar el temporizador actual para evitar ejecuciones múltiples
         clearTimeout(timer);
         // Verificar si la palabra seleccionada es correcta
         if (selectedWord === currentWord) {
-            optionElement.classList.add('correct');
+          optionElement.classList.add("correct");
+          puntuacion++;
+          document.getElementById("score").textContent = puntuacion;
+          if (puntuacion === 10) {
+            // Mostrar modal de juego terminado
+            mostrarModalJuegoTerminado();
+          }
         } else {
-            optionElement.classList.add('incorrect');
+          optionElement.classList.add("incorrect");
         }
         // Después de un segundo, limpiar las clases y, opcionalmente, reiniciar el juego
         setTimeout(() => {
-            optionElement.classList.remove('correct', 'incorrect');
-            startGame();
+          optionElement.classList.remove("correct", "incorrect");
+          startGame();
         }, 1000);
-            //document.getElementById('options-container').classList.add('hidden');
-            //document.getElementById('congratulations').classList.remove('hidden');
-        }
+        //document.getElementById('options-container').classList.add('hidden');
+        //document.getElementById('congratulations').classList.remove('hidden');
+      }
 
-    
-
-    // Iniciar un temporizador que ejecutará el código dentro de la función después de 10 segundos
-    function startTimer() {
+      // Iniciar un temporizador que ejecutará el código dentro de la función después de 10 segundos
+      function startTimer() {
         timer = setTimeout(() => {
-            alert("Tiempo agotado. ¡Intenta de nuevo!");
-            startGame();
-        }, 5000); // Cambia este valor al tiempo deseado en milisegundos
-    }
-    
+          alert("Tiempo agotado. ¡Intenta de nuevo!");
+          startGame();
+        }, 20000); // Cambia este valor al tiempo deseado en milisegundos
+      }
 
-    // Inicia el juego cuando la página se carga
-    window.onload = startGame;
+      // Inicia el juego cuando la página se carga
+      window.onload = startGame;
 
-</script>
-</body>
+      // Función para mostrar el modal de inicio
+      function mostrarModalInicio() {
+        document.getElementById("startModal").style.display = "flex";
+        document.getElementById("backgroundModal").style.display = "flex";
+      }
+
+      // Función para iniciar el juego al cerrar el modal de inicio
+      function iniciarJuego() {
+        document.getElementById("startModal").style.display = "none";
+        document.getElementById("backgroundModal").style.display = "none";
+        reiniciarJuego();
+      }
+
+      function mostrarModalJuegoTerminado() {
+        document.getElementById("endModal").style.display = "flex";
+        document.getElementById("endBackgroundModal").style.display = "flex";
+      }
+
+      function reiniciarJuego() {
+        // Ocultar modal de juego terminado
+        document.getElementById("endModal").style.display = "none";
+        document.getElementById("endBackgroundModal").style.display = "none";
+        // Reiniciar puntuación
+        puntuacion = 0;
+        document.getElementById("score").textContent = puntuacion;
+      }
+    </script>
+  </body>
 </html>

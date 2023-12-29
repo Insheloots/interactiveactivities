@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Completa la frase</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -47,6 +53,57 @@
     <title>COMPLETA LA FRASE</title>
   </head>
   <body>
+    <!-- Modal de inicio -->
+    <div
+      id="backgroundModal"
+      class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+    >
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          id="startModal"
+          class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        >
+          <div
+            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+          >
+            <!-- Panel del modal -->
+            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <!-- Título en la parte superior -->
+              <h2 class="text-xl text-center font-bold mb-6 text-sky-600">
+                ¡Bienvenido a Completa La Frase!
+              </h2>
+              <!-- Contenido del modal -->
+              <div class="sm:flex sm:items-start">
+                <!-- Objetivo e Instrucciones en la parte inferior -->
+                <div class="flex flex-col items-start mb-10">
+                  <p class="text-base text-justify m-1">
+                    <span class="font-bold">Objetivo: </span>Ejercitar la
+                    comprensión lectora mediante la organización correcta de los
+                    elementos de la frase.
+                  </p>
+                  <p class="text-base text-justify m-1">
+                    <span class="font-bold">Instrucciones: </span>Realiza la
+                    lectura en silencio. No muevas los labios durante este
+                    proceso. Selecciona la parte de la frase que le da sentido
+                    al texto inicial. Realiza la actividad en el menor tiempo
+                    posible.
+                  </p>
+                </div>
+              </div>
+              <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+              <div class="flex justify-center">
+                <button
+                  class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                  onclick="iniciarJuego()"
+                >
+                  Comenzar Juego
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="game-container">
       <div id="phrase-display"></div>
       <div id="options-container" class="hidden"></div>
@@ -55,17 +112,86 @@
       </div>
     </div>
 
+    <!-- Contador de puntuación -->
+    <div
+      id="scoreContainer"
+      class="absolute top-4 right-4 text-lg font-semibold text-white bg-sky-600 p-2 rounded shadow"
+    >
+      Puntuación: <span id="score" class="ml-2">0</span>
+    </div>
+
+    <!-- Modal de juego terminado -->
+    <div
+      id="endBackgroundModal"
+      class="fixed hidden inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+    >
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          id="endModal"
+          class="flex hidden min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        >
+          <div
+            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+          >
+            <!-- Panel del modal -->
+            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <!-- Título en la parte superior -->
+              <h2 class="text-xl text-center font-bold mb-6 text-sky-600">
+                ¡Felicidades actividad terminada!
+              </h2>
+              <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+              <div class="flex justify-center">
+                <button
+                  class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                  onclick="reiniciarJuego()"
+                >
+                  Reiniciar actividad
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+
       const phrases = [
         "A palabras necias oídos sordos",
         "Haz el amor y no la guerra",
         "Camarón que se duerme se lo lleva la corriente",
         "Más vale prevenir que lamentar",
         "A buen entendedor pocas palabras bastan",
+        "La vida es sueño, y los sueños, sueños son",
+        "La práctica hace al maestro",
+        "El que mucho abarca, poco aprieta",
+        "Más vale tarde que nunca",
+        "No hay mal que por bien no venga",
+        "Donde hay humo, hay fuego",
+        "A mal tiempo, buena cara",
+        "Más vale maña que fuerza",
+        "Ojos que no ven, corazón que no siente",
+        "Perro que ladra, no muerde",
+        "Camarón que se duerme, se lo lleva la corriente",
+        "Más vale pájaro en mano que cien volando",
+        "No hay peor ciego que el que no quiere ver",
+        "La paciencia es amarga, pero sus frutos son dulces",
+        "No hay caminos para la paz; la paz es el camino",
+        "A donde el corazón se inclina, el pie camina",
+        "El poder no cambia a las personas, solo revela quiénes son",
       ];
+
+      shuffleArray(phrases);
       let currentPhrase;
       let incompletePart;
       let timer;
+      let puntuacion = 0;
 
       function startGame() {
         document.getElementById("options-container").classList.remove("hidden");
@@ -94,6 +220,9 @@
         const incompleteIndex = Math.floor(words.length / 2);
         return words.slice(incompleteIndex).join(" ");
       }
+
+      const maxVerticalOptions = 6;
+
       // muestra las opciones (la segunda mitad de otras frases) y la primera mitad de la frase en "phrase-display".
       function displayOptions() {
         const optionsContainer = document.getElementById("options-container");
@@ -107,7 +236,18 @@
           .filter((phrase) => phrase !== currentPhrase)
           .sort(() => Math.random() - 0.5);
 
-        shuffledPhrases.forEach((phrase) => {
+        // Tomar solo las primeras 'maxVerticalOptions' frases
+        const visiblePhrases = shuffledPhrases.slice(0, maxVerticalOptions);
+
+        // Elegir aleatoriamente la posición para la opción correcta
+        const correctPosition = Math.floor(
+          Math.random() * (maxVerticalOptions + 1)
+        );
+
+        // Insertar la opción correcta en la posición elegida
+        visiblePhrases.splice(correctPosition, 0, currentPhrase);
+
+        visiblePhrases.forEach((phrase) => {
           const optionElement = document.createElement("div");
           optionElement.textContent = getIncompletePart(phrase);
           optionElement.classList.add("option");
@@ -131,6 +271,12 @@
         // Comparar la frase seleccionada con la frase actual
         if (selectedPhrase === currentPhrase) {
           optionElement.classList.add("correct");
+          puntuacion++;
+          if (puntuacion === 10) {
+            // Mostrar modal de juego terminado
+            mostrarModalJuegoTerminado();
+          }
+          document.getElementById("score").textContent = puntuacion;
         } else {
           optionElement.classList.add("incorrect");
         }
@@ -154,6 +300,33 @@
 
       // Inicia el juego cuando la página se carga
       window.onload = startGame;
+
+      // Función para mostrar el modal de inicio
+      function mostrarModalInicio() {
+        document.getElementById("startModal").style.display = "flex";
+        document.getElementById("backgroundModal").style.display = "flex";
+      }
+
+      // Función para iniciar el juego al cerrar el modal de inicio
+      function iniciarJuego() {
+        document.getElementById("startModal").style.display = "none";
+        document.getElementById("backgroundModal").style.display = "none";
+        reiniciarJuego();
+      }
+
+      function mostrarModalJuegoTerminado() {
+        document.getElementById("endModal").style.display = "flex";
+        document.getElementById("endBackgroundModal").style.display = "flex";
+      }
+
+      function reiniciarJuego() {
+        // Ocultar modal de juego terminado
+        document.getElementById("endModal").style.display = "none";
+        document.getElementById("endBackgroundModal").style.display = "none";
+        // Reiniciar puntuación
+        puntuacion = 0;
+        document.getElementById("score").textContent = puntuacion;
+      }
     </script>
   </body>
 </html>

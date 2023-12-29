@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Escaneo</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       * {
         box-sizing: border-box;
@@ -39,55 +45,283 @@
         background-color: #8bc34a;
         color: white;
       }
+
+      .clicked {
+        pointer-events: none; /* Desactivar clics adicionales en esta palabra */
+      }
     </style>
     <title>ESCANEO</title>
   </head>
   <body>
+    <!-- Modal de inicio -->
+    <div
+      id="backgroundModal"
+      class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+    >
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          id="startModal"
+          class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        >
+          <div
+            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+          >
+            <!-- Panel del modal -->
+            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <!-- Título en la parte superior -->
+              <h2 class="text-xl text-center font-bold mb-6 text-sky-600">
+                ¡Bienvenido a Escaneo!
+              </h2>
+              <!-- Contenido del modal -->
+              <div class="sm:flex sm:items-start">
+                <!-- Objetivo e Instrucciones en la parte inferior -->
+                <div class="flex flex-col items-start mb-10">
+                  <p class="text-base text-justify m-1">
+                    <span class="font-bold">Objetivo: </span>Estimular la
+                    concentración y rapidez de lectura mediante la ubicación de
+                    la palabra indicada.
+                  </p>
+                  <p class="text-base text-justify m-1">
+                    <span class="font-bold">Instrucciones: </span>Busca la
+                    palabra indicada dentro del parrafo haciendo clic sobre
+                    esta.Realiza la actividad en el menor tiempo posible.
+                  </p>
+                </div>
+              </div>
+              <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+              <div class="flex justify-center">
+                <button
+                  class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                  onclick="iniciarJuego()"
+                >
+                  Comenzar Juego
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="paragraph"></div>
     <div id="counter">Contador: 0</div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Obtener elementos del DOM
-        const paragraph = document.getElementById("paragraph");
-        const counter = document.getElementById("counter");
+    <!-- Modal de juego en Marcha -->
+    <div
+      id="runBackgroundModal"
+      class="fixed hidden inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+    >
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          id="runModal"
+          class="flex hidden min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        >
+          <div
+            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+          >
+            <!-- Panel del modal -->
+            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <!-- Título en la parte superior -->
+              <h2 class="text-xl text-center font-bold mb-6 text-sky-600">
+                ¡Felicidades! ¡Párrafo terminado!
+              </h2>
+              <p class="text-xl text-lg mb-4 text-center">Puntuación: <span id="finalScore">0</span></p>
+              <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+              <div class="flex justify-center">
+                <button
+                  class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                  onclick="SiguienteParrafo()"
+                >
+                  Siguiente Párrafo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        // Definir el párrafo
-        const text =
-          "La luz es esencial para la vida. Sin luz, no podríamos ver ni disfrutar de la belleza que nos rodea. La luz del sol nos da energía y calor.La luz, ese fenómeno fascinante que ilumina nuestro mundo y da vida a todo lo que nos rodea, es uno de los elementos más fundamentales de nuestra existencia. Desde el amanecer radiante hasta el crepúsculo sereno, la luz nos envuelve con su manto cálido y dorado, marcando el ritmo de nuestras vidas.";
+    <!-- Modal de juego Terminado -->
+    <div
+      id="endBackgroundModal"
+      class="fixed hidden inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+    >
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          id="endModal"
+          class="flex hidden min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        >
+          <div
+            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+          >
+            <!-- Panel del modal -->
+            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <!-- Título en la parte superior -->
+              <h2 class="text-xl text-center font-bold mb-6 text-sky-600">
+                ¡Felicidades actividad terminada! <br />
+                ¡Haz completado todos los parrafos!
+              </h2>
+              <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+              <div class="flex justify-center">
+                <button
+                  class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                  onclick="reiniciarJuego()"
+                >
+                  Reiniciar actividad
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentParagraph = "";
+      let totalOccurrences = 0;
+      let count = 0;
+      let currentKeyword = "amor";
+
+      const paragraph = document.getElementById("paragraph");
+      const counter = document.getElementById("counter");
+      const modal = document.getElementById("modal");
+      const finalScore = document.getElementById("finalScore");
+      const totalScore = document.getElementById("TotalScore");
+
+      // Definir el párrafo
+      const paragraphs = [
+        "En el tranquilo atardecer, donde el sol se despedía en tonos cálidos y dorados, ella encontró sus pensamientos navegando en el océano del amor. Sus ojos reflejaban la serenidad y la intensidad que solo el amor verdadero puede otorgar. Cada latido de su corazón resonaba con el suave murmullo del viento, recordándole las dulces promesas de un amor que crecía como las flores en primavera.",
+        "La luz es esencial para la vida. Sin luz, no podríamos ver ni disfrutar de la belleza que nos rodea. La luz del sol nos da energía y calor.La luz, ese fenómeno fascinante que ilumina nuestro mundo y da vida a todo lo que nos rodea, es uno de los elementos más fundamentales de nuestra existencia. Desde el amanecer radiante hasta el crepúsculo sereno.",
+        "La vida es un viaje fascinante lleno de momentos inolvidables. Cada día nos presenta oportunidades para aprender, crecer y apreciar la belleza que nos rodea. Vive cada momento con pasión y gratitud, y descubre la magia que la vida tiene para ofrecer.",
+      ];
+
+      function cambiarContenido() {
+        // extraer el primer parrafo
+        currentParagraph = paragraphs.shift();
+
+        if (!currentParagraph) {
+          mostrarModalJuegoTerminado();
+          totalScore.textContent = count;
+          return;
+        }
+
+        // Puedes ajustar la palabra clave aquí según el párrafo actual
+        //const currentKeyword = "amor";
+
+        // Contar el número total de veces que aparece la palabra clave en el nuevo párrafo
+        totalOccurrences = (
+          currentParagraph.match(new RegExp(`\\b${currentKeyword}\\b`, "gi")) ||
+          []
+        ).length;
 
         // Inicializar el contador
-        let count = 0;
-        counter.textContent = `Busca la palabra Luz ${count}`;
+        count = 0;
+        counter.textContent = `Ecuentra: ${currentKeyword} ${count} / ${totalOccurrences}`;
 
-        // Dividir el párrafo en palabras
-        const words = text.split(/\s+/);
+        // Dividir el nuevo párrafo en palabras
+        const newWords = currentParagraph.split(/\s+/);
+        // const words = text.split(/\s+/);
 
-        // Crear el párrafo con palabras interactivas
-        paragraph.innerHTML = words
+        // Crear el nuevo párrafo con palabras interactivas
+        paragraph.innerHTML = newWords
           .map((word, index) => {
-            //const cleanedWord = word.replace(/[.,]/g, ''); // Eliminar puntos y comas
-            //return `<span class="word" data-index="${index}">${cleanedWord}</span> `;
-            return `<span class="word" data-index="${index}">${word}</span>`;
+            if (word.match(/\b\w+\b/)) {
+              return `<span class="word" data-index="${index}">${word}</span>`;
+            } else {
+              return word;
+            }
           })
-          .join("");
+          .join(" ");
 
-        // Agregar evento clic a cada palabra
+        // Quitar la clase "clicked" de todas las palabras
         const wordElements = document.getElementsByClassName("word");
+        for (const wordElement of wordElements) {
+          wordElement.classList.remove("clicked");
+        }
+
+        // Agregar evento clic a cada palabra en el nuevo párrafo
         for (const wordElement of wordElements) {
           wordElement.addEventListener("click", function () {
             const wordIndex = this.dataset.index;
-            const cleanedClickedWord = words[wordIndex].replace(/[.,]/g, ""); // Eliminar puntos y comas
-            if (cleanedClickedWord.toLowerCase() === "luz") {
-              // Incrementar el contador si la palabra es "luz"
+            const cleanedClickedWord = newWords[wordIndex].replace(/[.,]/g, ""); // Eliminar puntos y comas
+            if (
+              cleanedClickedWord.toLowerCase() === currentKeyword &&
+              !this.classList.contains("clicked")
+            ) {
+              // Incrementar el contador si la palabra es la palabra clave y no ha sido clickeada antes
               count++;
-              counter.textContent = `Luz: (${count} de 5`;
+              counter.textContent = `Ecuentra: ${currentKeyword} ${count} / ${totalOccurrences}`;
               // Cambiar el color de fondo de la palabra
               this.classList.add("correct");
+              // Marcar la palabra como clickeada
+              this.classList.add("clicked");
+
+              // Verificar si se encontraron todas las instancias de la palabra clave
+              if (count === totalOccurrences) {
+                // Mostrar el modal
+                document.getElementById("runModal").style.display = "flex";
+                document.getElementById("runBackgroundModal").style.display =
+                  "flex";
+                // Actualizar la puntuación final en el modal
+                finalScore.textContent = count;
+              }
             }
           });
         }
-      });
+      }
+
+      // Función para mostrar el modal de inicio
+      function mostrarModalInicio() {
+        document.getElementById("startModal").style.display = "flex";
+        document.getElementById("backgroundModal").style.display = "flex";
+      }
+
+      // Función para iniciar el juego al cerrar el modal de inicio
+      function iniciarJuego() {
+        document.getElementById("startModal").style.display = "none";
+        document.getElementById("backgroundModal").style.display = "none";
+      }
+
+
+      function SiguienteParrafo() {
+        // Ocultar el modal
+        document.getElementById("runModal").style.display = "none";
+        document.getElementById("runBackgroundModal").style.display = "none";
+
+        // Cambiar la palabra clave según el párrafo actual
+        if (currentKeyword === "amor") {
+          currentKeyword = "luz";
+        } else if (currentKeyword === "luz") {
+          currentKeyword = "vida";
+        }
+        // Cambiar el contenido con la nueva palabra clave
+        cambiarContenido();
+      }
+
+      function mostrarModalJuegoTerminado() {
+        document.getElementById("endModal").style.display = "flex";
+        document.getElementById("endBackgroundModal").style.display = "flex";
+      }
+
+      function reiniciarJuego() {
+        // Ocultar el modal
+        document.getElementById("endModal").style.display = "none";
+        document.getElementById("endBackgroundModal").style.display = "none";
+        /*
+        // Restaurar el contenido inicial y reiniciar el juego
+        currentParagraph = "";
+        totalOccurrences = 0;
+        count = 0;
+        currentKeyword = "amor";
+
+        // Llamar a la función cambiarContenido para empezar de nuevo
+        cambiarContenido();
+        */
+      }
+
+      // Iniciar el juego al cargar la página
+      window.onload = cambiarContenido;
+
+      
     </script>
   </body>
 </html>
