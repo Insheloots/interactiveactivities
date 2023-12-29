@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento Visual Horizontal Secuencial</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Lineas Verticales</title>
 </head>
 
-<body class="flex items-center justify-center h-screen bg-gray-100 font-poppins">
+<body class="font-poppins flex items-center justify-center flex-col h-screen m-0 bg-neutral-100">
 
     <!-- Modal de inicio -->
     <div id="backgroundModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
@@ -29,19 +29,18 @@
                         <div class="sm:flex sm:items-start">
                             <!-- Objetivo e Instrucciones en la parte inferior -->
                             <div class="flex flex-col items-start mb-10">
-                                <p class="text-base text-justify m-1"><span class="font-bold">Objetivo: </span>Ejercitar
-                                    los músculos oculares y ampliar la visión periférica mediante ejercicios de
-                                    estimulación visual.</p>
+                                <p class="text-base text-justify m-1"><span class="font-bold">Objetivo: </span>Mejorar
+                                    la atención y concentración mediante el seguimiento visual de los elementos en
+                                    aparición secuencial.</p>
                                 <p class="text-base text-justify m-1"><span class="font-bold">Instrucciones:
-                                    </span>Mantenga la mirada fija en las dos lineas del centro, mientras intenta
-                                    observar las letras, números o palabras que aparecen en los extremos.</p>
+                                    </span>Observe los elementos que se van indicando horizontalmente.</p>
                             </div>
                         </div>
                         <!-- Botón centrado debajo de Objetivo e Instrucciones -->
                         <div class="flex justify-center">
                             <button
                                 class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
-                                onclick="iniciarJuego()">Comenzar Actividad</button>
+                                onclick="iniciarJuego()">Comenzar Juego</button>
                         </div>
                     </div>
                 </div>
@@ -51,10 +50,9 @@
     </div>
 
     <!-- Contenido -->
-    <div class="flex items-center font-medium text-lg" id="columnContainer">
-        <div class="bg-gray-500 h-24 w-5 m-2"></div>
-        <div class="bg-gray-500 h-24 w-5 m-2"></div>
-    </div>
+    <div id="grid" class="grid grid-cols-10 gap-2 mt-8"></div>
+
+
 
     <!-- Modal de juego terminado -->
     <div id="endBackgroundModal" class="fixed hidden inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
@@ -82,62 +80,79 @@
         </div>
     </div>
 
+
     <script>
-        // Obtiene el contenedor de las columnas
-        const columnContainer = document.getElementById('columnContainer');
-        let intervalId;
-        // Inicializa la altura base
-        let alturaBase = 150;
 
-        // Función para agregar hijos a las columnas
-        function agregarHijos() {
-            // Elimina las letras de la columna anterior
-            const letrasAnteriores = document.querySelectorAll('#columnContainer p');
-            letrasAnteriores.forEach(letra => letra.remove());
+        function llenarCuadricula() {
+            // Obtener la referencia a la cuadrícula
+            const gridElement = document.getElementById('grid');
 
-            const nuevoHijoIzquierda = document.createElement('div');
-            const textHijoIzquierda = document.createElement('p');
-            nuevoHijoIzquierda.className = 'bg-blue-500 w-5 m-2'; // Establece clases de Tailwind para el estilo
-            textHijoIzquierda.textContent = 'Ñ Ñ Ñ';
+            // Definir los patrones de números para cada fila
+            const patterns = [
+                Array.from({ length: 10 }, (_, i) => 82 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 62 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 41 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 21 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 1 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 2 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 22 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 42 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 61 + i * 2),
+                Array.from({ length: 10 }, (_, i) => 81 + i * 2)
+            ];
 
-            // Ajusta la altura para la nueva columna
-            nuevoHijoIzquierda.style.height = `${alturaBase}px`;
-            columnContainer.insertBefore(nuevoHijoIzquierda, columnContainer.firstChild);
-            columnContainer.insertBefore(textHijoIzquierda, columnContainer.firstChild);
-
-            const nuevoHijoDerecha = document.createElement('div');
-            const textHijoDerecha = document.createElement('p');
-            nuevoHijoDerecha.className = 'bg-blue-500 w-5 m-2'; // Establece clases de Tailwind para el estilo
-            textHijoDerecha.textContent = 'E E E';
-
-            // Ajusta la altura para la nueva columna
-            nuevoHijoDerecha.style.height = `${alturaBase}px`;
-            columnContainer.appendChild(nuevoHijoDerecha);
-            columnContainer.appendChild(textHijoDerecha);
-
-            // Incrementa la altura base para la próxima columna
-            alturaBase += 40;
+            // Llenar la cuadrícula con los patrones
+            patterns.forEach(pattern => {
+                pattern.forEach(number => {
+                    const cell = document.createElement('div');
+                    cell.className = 'w-10 h-10 bg-gray-300 flex items-center justify-center border';
+                    cell.textContent = number;
+                    gridElement.appendChild(cell);
+                });
+            });
         }
 
-        function limpiarColumnas() {
-            const columnas = document.querySelectorAll('#columnContainer div');
-            columnas.forEach(columna => columna.remove());
-            alturaBase = 150; // Reinicia la altura base
+        function iluminarFila5() {
+            // Definir el orden específico de iluminación
+            const ordenIluminacion = [5, 6, 15, 16, 25, 26, 35, 36, 45, 46, 55, 56, 65, 66, 75, 76, 85, 86, 95, 96,
+                4, 7, 14, 17, 24, 27, 34, 37, 44, 47, 54, 57, 64, 67, 74, 77, 84, 87, 94, 97,
+                3, 8, 13, 18, 23, 28, 33, 38, 43, 48, 53, 58, 63, 68, 73, 78, 83, 88, 93, 98,
+                2, 9, 12, 19, 22, 29, 32, 39, 42, 49, 52, 59, 62, 69, 72, 79, 82, 89, 92, 99,
+                1, 10, 11, 20, 21, 30, 31, 40, 41, 50, 51, 60, 61, 70, 71, 80, 81, 90, 91, 100];
+
+            // Obtener los elementos de la quinta fila en el orden especificado
+            const fila5Elements = ordenIluminacion.map(posicion => document.querySelector(`.grid > div:nth-child(${posicion})`));
+
+            // Iterar sobre los elementos y aplicar la iluminación secuencial
+            fila5Elements.forEach((cell, index) => {
+                setTimeout(() => {
+                    // Cambiar el color del borde
+                    cell.style.border = '2px solid #1d4ed8';
+
+                    // Después de cierto tiempo, revertir el cambio
+                    setTimeout(() => {
+                        cell.style.border = ''; // Esto eliminará el estilo del borde
+                    }, 100); // Tiempo de cambio
+                }, index * 100); // El intervalo de tiempo entre cambios (ajustable)
+            });
+
+            setTimeout(() => {
+                mostrarModalJuegoTerminado();
+            }, 10000)
+
+        }
+
+
+        // Función para mostrar el modal de inicio
+        function mostrarModalInicio() {
+            document.getElementById('startModal').style.display = 'flex';
         }
 
         // Función para iniciar el juego al cerrar el modal de inicio
         function iniciarJuego() {
             document.getElementById('startModal').style.display = 'none';
             document.getElementById('backgroundModal').style.display = 'none';
-            limpiarColumnas();
-            agregarHijos();
-            intervalId = setInterval(agregarHijos, 1000);
-
-            // Detén la generación después de 8 segundos
-            setTimeout(function () {
-                clearInterval(intervalId);
-                mostrarModalJuegoTerminado();
-            }, 7000);
+            iluminarFila5();
         }
 
         // Función para mostrar el modal de juego terminado
@@ -150,7 +165,12 @@
         function reiniciarJuego() {
             document.getElementById('endModal').style.display = 'none';
             document.getElementById('endBackgroundModal').style.display = 'none';
-            iniciarJuego();
+            iluminarFila5();
+        }
+
+        // Llama a la función al cargar la página
+        window.onload = function () {
+            llenarCuadricula();
         }
     </script>
 </body>

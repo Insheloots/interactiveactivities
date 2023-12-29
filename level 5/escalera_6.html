@@ -109,29 +109,34 @@
 
     <script>
         const palabras = [
-            ['Internet', 'Navegador', 'Correo electrónico', 'Red social'],
-            ['Enlace', 'Sitio web', 'Descargar', 'Subir'],
-            ['Innovación', 'Robótica', 'Inteligencia', 'Ciencia'],
-            ['Realidad', 'Ciberseguridad', 'Big Data', 'IoT'],
-            ['Fotografía', 'Aventura', 'Música', 'Gastronomía'],
-            ['Deporte', 'Naturaleza', 'Viaje', 'Cine'],
-            ['Desarrollo', 'Proyecto', 'Equipo', 'Metodología'],
-            ['Cliente', 'Entrega', 'Planificación', 'Evaluación'],
-            ['Energía', 'Sostenibilidad', 'Renovable', 'Medio ambiente'],
-            ['Reciclaje', 'Cambio climático', 'Contaminación', 'Biodiversidad'],
-            ['Salud', 'Bienestar', 'Ejercicio', 'Nutrición'],
-            ['Mental', 'Físico', 'Dieta', 'Descanso'],
-            ['Creatividad', 'Diseño', 'Innovación', 'Arte'],
-            ['Expresión', 'Estilo', 'Inspira', 'Imagina'],
-            ['Astronomía', 'Planeta', 'Estrella', 'Galaxia'],
-            ['Exploración', 'Telescopio', 'Observación', 'Universo'],
-            ['Educación', 'Aprendizaje', 'Conocimiento', 'Estudio'],
-            ['Maestro', 'Estudiante', 'Escuela', 'Universidad'],
-            ['Finanzas', 'Economía', 'Dinero', 'Inversión'],
-            ['Ahorro', 'Mercado', 'Banco', 'Negocio'],
-            ['Cultura', 'Tradición', 'Historia', 'Herencia'],
-            ['Identidad', 'Folklore', 'Artesanía', 'Festival'],
+            ['Astronomía', 'Neutrón', 'Entropía', 'Quark'],
+            ['Biología', 'Mutación', 'Ecosistema', 'Genoma'],
+            ['Física', 'Cuántico', 'Gravedad', 'Energía oscura'],
+            ['Informática', 'Algoritmo', 'Inteligencia artificial', 'Criptografía cuántica'],
+            ['Medicina', 'Genética', 'Inmunidad', 'Biotecnología'],
+            ['Geología', 'Tectónica de placas', 'Sedimentación', 'Magma'],
+            ['Matemáticas', 'Teorema', 'Fractal', 'Ecuación diferencial'],
+            ['Psicología', 'Cognición', 'Emoción', 'Neurotransmisor'],
+            ['Ecología', 'Biodiversidad', 'Cadena trófica', 'Sostenibilidad'],
+            ['Química', 'Reacción química', 'Enlace iónico', 'Catalizador'],
+            ['Fisiología', 'Homeostasis', 'Sistema nervioso', 'Metabolismo'],
+            ['Geografía', 'Topografía', 'Climatología', 'Cartografía'],
+            ['Sociología', 'Estructura social', 'Cultura', 'Movimiento social'],
+            ['Antropología', 'Arqueología', 'Etnografía', 'Hominización'],
+            ['Paleontología', 'Fósil', 'Extinción', 'Era geológica'],
+            ['Ingeniería', 'Innovación', 'Robótica', 'Nanotecnología'],
+            ['Astrofísica', 'Nebulosa', 'Estrella de neutrones', 'Telescopio espacial'],
+            ['Neurociencia', 'Sinapsis', 'Neurona', 'Plasticidad cerebral'],
+            ['Economía', 'Oferta y demanda', 'Crecimiento económico', 'Inflación'],
+            ['Estadística', 'Regresión lineal', 'Desviación estándar', 'Muestreo'],
+            ['Oceanografía', 'Corriente oceánica', 'Bioma marino', 'Plataforma continental'],
+            ['Arquitectura', 'Urbanismo', 'Diseño sostenible', 'Innovación constructiva'],
+            ['Lingüística', 'Fonología', 'Morfología', 'Sintaxis'],
         ];
+
+
+
+
 
 
         const ordenConjuntos = Array.from({ length: palabras.length }, (_, i) => i);
@@ -169,7 +174,7 @@
 
             setTimeout(() => {
                 mostrarPalabraSiguiente();
-            }, 800);
+            }, 100);
         }
 
         function mostrarModalJuegoTerminado() {
@@ -186,12 +191,12 @@
             if (palabraActualIndex < 3) {
                 setTimeout(() => {
                     mostrarPalabraSiguiente();
-                }, 800);
+                }, 100);
             } else if (palabraActualIndex === 3) {
                 setTimeout(() => {
                     wordContainer.textContent = '';
                     llenarBotonesConPalabras();
-                }, 800);
+                }, 100);
             }
         }
 
@@ -217,7 +222,7 @@
                 puntuacion++;
                 document.getElementById('score').textContent = puntuacion;
 
-                if (puntuacion === 5) {
+                if (puntuacion === 20) {
                     // Mostrar modal de juego terminado
                     mostrarModalJuegoTerminado();
                 } else {
@@ -227,7 +232,7 @@
 
                     setTimeout(() => {
                         mostrarPalabraSiguiente();
-                    }, 800);
+                    }, 100);
                 }
             } else {
                 audioElement.src = 'https://cdn.freesound.org/previews/173/173958_2437358-lq.mp3';
@@ -239,7 +244,7 @@
 
                 setTimeout(() => {
                     mostrarPalabraSiguiente();
-                }, 800);
+                }, 100);
             }
         }
 

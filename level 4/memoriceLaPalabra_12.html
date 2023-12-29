@@ -128,7 +128,9 @@
     <script>
 
 
-        const palabras = ["perro", "gato", "casa", "coche", "sol", "luna", "montaña", "río", "playa", "libro", "computadora", "teléfono", "jardín", "pizza", "avión", "silla", "mesa", "amigo", "familia", "trabajo", "estudio", "ciudad", "mar", "bosque", "canción", "arte", "viaje", "tiempo", "vida", "amor", "paz", "felicidad", "cine", "musica", "foto", "deporte", "comida", "agua", "fuego", "aire", "nieve", "flor", "fruta", "huevo", "color", "día", "noche", "fiesta"];
+        const palabras = ['Gavilán', 'Can', 'Residencia', 'Automóvil', 'Illuminación', 'Astro', 'Elevación', 'Riachuelo', 'Ribera', 'Relato', 'Computadora', 'Teléfono celular', 'Parque', 'Fideos', 'Aeronave', 'Sofá', 'Mesilla de noche', 'Compañero', 'Parentesco', 'Trabajo', 'Estudio', 'Metrópoli', 'Océano', 'Boscaje', 'Melodía', 'Expresiones artísticas', 'Excursión', 'Reloj', 'Existencia', 'Filantropía', 'Serenidad', 'Galería', 'Música', 'Fotografía', 'Competencia atlética', 'Sustento', 'Líquido', 'Llamarada', 'Ventisca', 'Copo', 'Floración', 'Baya', 'Ovocito', 'Tonalidad', 'Jornada', 'Nocturnidad', 'Festejo'];
+
+
         let puntuacion = 0
 
 
@@ -174,7 +176,7 @@
             wordContainer.style.display = "block";
             setTimeout(() => {
                 wordContainer.style.display = "none";
-            }, 800);
+            }, 200);
         }
 
         // Verificar respuesta
@@ -194,7 +196,7 @@
                 checkmarkSvg.style.display = "block";
                 setTimeout(() => {
                     checkmarkSvg.style.display = "none";
-                }, 500);
+                }, 100);
 
                 // Limpiar el input
                 wordInput.value = '';
@@ -202,13 +204,13 @@
                 // Mostrar una nueva palabra después de la verificación
                 setTimeout(() => {
                     mostrarPalabraAleatoria();
-                }, 800)
+                }, 200)
 
                 // Asigna la puntuación
                 puntuacion++
                 document.getElementById('score').textContent = puntuacion;
 
-                if (puntuacion === 5) {
+                if (puntuacion === 15) {
                     mostrarModalJuegoTerminado();
                 }
 
@@ -218,7 +220,7 @@
                 incorrectmarkSvg.style.display = "block";
                 setTimeout(() => {
                     incorrectmarkSvg.style.display = "none";
-                }, 500);
+                }, 100);
 
                 // Limpiar el input
                 wordInput.value = '';
@@ -226,7 +228,7 @@
                 // Mostrar una nueva palabra después de la verificación
                 setTimeout(() => {
                     mostrarPalabraAleatoria();
-                }, 800)
+                }, 200)
             }
         }
 

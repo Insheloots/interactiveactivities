@@ -109,20 +109,20 @@
 
     <script>
         const palabras = [
-            ['Internet', 'Navegador', 'Correo electrónico', 'Red social'],
-            ['Enlace', 'Sitio web', 'Descargar', 'Subir'],
-            ['Innovación', 'Robótica', 'Inteligencia', 'Ciencia'],
-            ['Realidad', 'Ciberseguridad', 'Big Data', 'IoT'],
-            ['Fotografía', 'Aventura', 'Música', 'Gastronomía'],
-            ['Deporte', 'Naturaleza', 'Viaje', 'Cine'],
-            ['Desarrollo', 'Proyecto', 'Equipo', 'Metodología'],
+            ['Conectividad', 'Explorador', 'Correo', 'Interacción'],
+            ['Enlace', 'Portal', 'Descarga', 'Cargar'],
+            ['Innovación', 'Automatización', 'Cognición', 'Investigación'],
+            ['Realidad', 'Seguridad', 'Análisis', 'IoT'],
+            ['Fotografía', 'Aventura', 'Armonía', 'Gastronomía'],
+            ['Competición', 'Ecología', 'Viaje', 'Cine'],
+            ['Desarrollo', 'Proyecto', 'Equipo', 'Enfoque'],
             ['Cliente', 'Entrega', 'Planificación', 'Evaluación'],
-            ['Energía', 'Sostenibilidad', 'Renovable', 'Medio ambiente'],
-            ['Reciclaje', 'Cambio climático', 'Contaminación', 'Biodiversidad'],
+            ['Energía', 'Sostenibilidad', 'Renovable', 'Medioambiente'],
+            ['Reciclaje', 'Clima', 'Contaminación', 'Biodiversidad'],
             ['Salud', 'Bienestar', 'Ejercicio', 'Nutrición'],
-            ['Mental', 'Físico', 'Dieta', 'Descanso'],
+            ['Mentalidad', 'Físico', 'Dieta', 'Descanso'],
             ['Creatividad', 'Diseño', 'Innovación', 'Arte'],
-            ['Expresión', 'Estilo', 'Inspira', 'Imagina'],
+            ['Expresión', 'Estilo', 'Inspiración', 'Imaginación'],
             ['Astronomía', 'Planeta', 'Estrella', 'Galaxia'],
             ['Exploración', 'Telescopio', 'Observación', 'Universo'],
             ['Educación', 'Aprendizaje', 'Conocimiento', 'Estudio'],
@@ -130,8 +130,9 @@
             ['Finanzas', 'Economía', 'Dinero', 'Inversión'],
             ['Ahorro', 'Mercado', 'Banco', 'Negocio'],
             ['Cultura', 'Tradición', 'Historia', 'Herencia'],
-            ['Identidad', 'Folklore', 'Artesanía', 'Festival'],
+            ['Identidad', 'Folklore', 'Artesanía', 'Festival']
         ];
+
 
 
         const ordenConjuntos = Array.from({ length: palabras.length }, (_, i) => i);
@@ -169,7 +170,7 @@
 
             setTimeout(() => {
                 mostrarPalabraSiguiente();
-            }, 800);
+            }, 500);
         }
 
         function mostrarModalJuegoTerminado() {
@@ -186,12 +187,12 @@
             if (palabraActualIndex < 3) {
                 setTimeout(() => {
                     mostrarPalabraSiguiente();
-                }, 800);
+                }, 500);
             } else if (palabraActualIndex === 3) {
                 setTimeout(() => {
                     wordContainer.textContent = '';
                     llenarBotonesConPalabras();
-                }, 800);
+                }, 500);
             }
         }
 
@@ -217,7 +218,7 @@
                 puntuacion++;
                 document.getElementById('score').textContent = puntuacion;
 
-                if (puntuacion === 5) {
+                if (puntuacion === 10) {
                     // Mostrar modal de juego terminado
                     mostrarModalJuegoTerminado();
                 } else {
@@ -227,7 +228,7 @@
 
                     setTimeout(() => {
                         mostrarPalabraSiguiente();
-                    }, 800);
+                    }, 500);
                 }
             } else {
                 audioElement.src = 'https://cdn.freesound.org/previews/173/173958_2437358-lq.mp3';
@@ -239,7 +240,7 @@
 
                 setTimeout(() => {
                     mostrarPalabraSiguiente();
-                }, 800);
+                }, 500);
             }
         }
 

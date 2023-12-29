@@ -109,29 +109,32 @@
 
     <script>
         const palabras = [
-            ['Internet', 'Navegador', 'Correo electrónico', 'Red social'],
-            ['Enlace', 'Sitio web', 'Descargar', 'Subir'],
-            ['Innovación', 'Robótica', 'Inteligencia', 'Ciencia'],
-            ['Realidad', 'Ciberseguridad', 'Big Data', 'IoT'],
-            ['Fotografía', 'Aventura', 'Música', 'Gastronomía'],
-            ['Deporte', 'Naturaleza', 'Viaje', 'Cine'],
-            ['Desarrollo', 'Proyecto', 'Equipo', 'Metodología'],
-            ['Cliente', 'Entrega', 'Planificación', 'Evaluación'],
-            ['Energía', 'Sostenibilidad', 'Renovable', 'Medio ambiente'],
-            ['Reciclaje', 'Cambio climático', 'Contaminación', 'Biodiversidad'],
-            ['Salud', 'Bienestar', 'Ejercicio', 'Nutrición'],
-            ['Mental', 'Físico', 'Dieta', 'Descanso'],
-            ['Creatividad', 'Diseño', 'Innovación', 'Arte'],
-            ['Expresión', 'Estilo', 'Inspira', 'Imagina'],
-            ['Astronomía', 'Planeta', 'Estrella', 'Galaxia'],
-            ['Exploración', 'Telescopio', 'Observación', 'Universo'],
-            ['Educación', 'Aprendizaje', 'Conocimiento', 'Estudio'],
-            ['Maestro', 'Estudiante', 'Escuela', 'Universidad'],
-            ['Finanzas', 'Economía', 'Dinero', 'Inversión'],
-            ['Ahorro', 'Mercado', 'Banco', 'Negocio'],
-            ['Cultura', 'Tradición', 'Historia', 'Herencia'],
-            ['Identidad', 'Folklore', 'Artesanía', 'Festival'],
+            ['Cascada', 'Melodía', 'Deslumbramiento', 'Esencia'],
+            ['Quasar', 'Declive', 'Aventura', 'Embelesar'],
+            ['Quintaesencia', 'Fulguración', 'Pureza', 'Investigación'],
+            ['Distopía', 'Atalaya', 'Reflexión', 'Entrelazamiento cuántico'],
+            ['Asombroso', 'Peregrinaje', 'Sereno', 'Delicatessen'],
+            ['Epopeya', 'Biosfera', 'Itinerario', 'Cinematografía'],
+            ['Génesis', 'Renovación', 'Élite', 'Perspectiva'],
+            ['Camadería', 'Obsequio', 'Enredo', 'Valoración'],
+            ['Vitalidad', 'Sostenibilidad', 'Infinitud', 'Entorno'],
+            ['Metamorfosis', 'Transformación', 'Grito', 'Biodiversidad'],
+            ['Vigor', 'Opulencia', 'Resiliencia', 'Sustento'],
+            ['Psiquismo', 'Fuerza', 'Disciplina', 'Recogimiento'],
+            ['Inspiración', 'Eclecticismo', 'Vanguardia', 'Pictórico'],
+            ['Efervescencia', 'Estética', 'Quimera', 'Imaginario'],
+            ['Cosmogonía', 'Esfera', 'Luminiscencia', 'Galaxia'],
+            ['Odisea', 'Telescopio', 'Perspectiva', 'Cosmovisión'],
+            ['Erudición', 'Discernimiento', 'Sabiduría', 'Aprendizaje'],
+            ['Docente', 'Alumno', 'Alma mater', 'Universidad'],
+            ['Finanzas', 'Economía', 'Opulencia', 'Inversión'],
+            ['Fortuna', 'Plaza de mercado', 'Cámara de tesorería', 'Emporio'],
+            ['Estirpe', 'Fabulación', 'Mitología', 'Gala'],
+            ['Identidad', 'Legado', 'Artesano', 'Fiesta']
         ];
+
+
+
 
 
         const ordenConjuntos = Array.from({ length: palabras.length }, (_, i) => i);
@@ -169,7 +172,7 @@
 
             setTimeout(() => {
                 mostrarPalabraSiguiente();
-            }, 800);
+            }, 200);
         }
 
         function mostrarModalJuegoTerminado() {
@@ -186,12 +189,12 @@
             if (palabraActualIndex < 3) {
                 setTimeout(() => {
                     mostrarPalabraSiguiente();
-                }, 800);
+                }, 200);
             } else if (palabraActualIndex === 3) {
                 setTimeout(() => {
                     wordContainer.textContent = '';
                     llenarBotonesConPalabras();
-                }, 800);
+                }, 200);
             }
         }
 
@@ -217,7 +220,7 @@
                 puntuacion++;
                 document.getElementById('score').textContent = puntuacion;
 
-                if (puntuacion === 5) {
+                if (puntuacion === 15) {
                     // Mostrar modal de juego terminado
                     mostrarModalJuegoTerminado();
                 } else {
@@ -227,7 +230,7 @@
 
                     setTimeout(() => {
                         mostrarPalabraSiguiente();
-                    }, 800);
+                    }, 200);
                 }
             } else {
                 audioElement.src = 'https://cdn.freesound.org/previews/173/173958_2437358-lq.mp3';
@@ -239,7 +242,7 @@
 
                 setTimeout(() => {
                     mostrarPalabraSiguiente();
-                }, 800);
+                }, 200);
             }
         }
 

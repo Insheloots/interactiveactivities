@@ -128,7 +128,8 @@
     <script>
 
 
-        const palabras = ["perro", "gato", "casa", "coche", "sol", "luna", "montaña", "río", "playa", "libro", "computadora", "teléfono", "jardín", "pizza", "avión", "silla", "mesa", "amigo", "familia", "trabajo", "estudio", "ciudad", "mar", "bosque", "canción", "arte", "viaje", "tiempo", "vida", "amor", "paz", "felicidad", "cine", "musica", "foto", "deporte", "comida", "agua", "fuego", "aire", "nieve", "flor", "fruta", "huevo", "color", "día", "noche", "fiesta"];
+        const palabras = ["pájaro", "perro", "hogar", "automóvil", "luz", "estrella", "colina", "arroyo", "orilla", "novela", "computación", "teléfono móvil", "parque", "pasta", "aeronave", "sillón", "mesita", "compañero", "parentela", "empleo", "estudio", "metrópoli", "océano", "arboleda", "melodía", "artes", "excursión", "cronómetro", "existencia", "caridad", "serenidad", "galería", "música", "imagen", "atletismo", "alimento", "líquido", "llama", "viento", "copo", "floración", "baya", "ovocito", "tono", "jornada", "nocturnidad", "celebración"];
+
         let puntuacion = 0
 
 
@@ -174,7 +175,7 @@
             wordContainer.style.display = "block";
             setTimeout(() => {
                 wordContainer.style.display = "none";
-            }, 800);
+            }, 500);
         }
 
         // Verificar respuesta
@@ -194,7 +195,7 @@
                 checkmarkSvg.style.display = "block";
                 setTimeout(() => {
                     checkmarkSvg.style.display = "none";
-                }, 500);
+                }, 400);
 
                 // Limpiar el input
                 wordInput.value = '';
@@ -202,13 +203,13 @@
                 // Mostrar una nueva palabra después de la verificación
                 setTimeout(() => {
                     mostrarPalabraAleatoria();
-                }, 800)
+                }, 500)
 
                 // Asigna la puntuación
                 puntuacion++
                 document.getElementById('score').textContent = puntuacion;
 
-                if (puntuacion === 5) {
+                if (puntuacion === 10) {
                     mostrarModalJuegoTerminado();
                 }
 
@@ -218,7 +219,7 @@
                 incorrectmarkSvg.style.display = "block";
                 setTimeout(() => {
                     incorrectmarkSvg.style.display = "none";
-                }, 500);
+                }, 400);
 
                 // Limpiar el input
                 wordInput.value = '';
@@ -226,7 +227,7 @@
                 // Mostrar una nueva palabra después de la verificación
                 setTimeout(() => {
                     mostrarPalabraAleatoria();
-                }, 800)
+                }, 500)
             }
         }
 

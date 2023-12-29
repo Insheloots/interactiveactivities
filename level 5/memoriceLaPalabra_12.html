@@ -128,7 +128,10 @@
     <script>
 
 
-        const palabras = ["perro", "gato", "casa", "coche", "sol", "luna", "montaña", "río", "playa", "libro", "computadora", "teléfono", "jardín", "pizza", "avión", "silla", "mesa", "amigo", "familia", "trabajo", "estudio", "ciudad", "mar", "bosque", "canción", "arte", "viaje", "tiempo", "vida", "amor", "paz", "felicidad", "cine", "musica", "foto", "deporte", "comida", "agua", "fuego", "aire", "nieve", "flor", "fruta", "huevo", "color", "día", "noche", "fiesta"];
+        const palabras = ['León', 'Tigre', 'Elefante', 'Jirafa', 'Océano', 'Delfín', 'Coral', 'Playa', 'Estrella', 'Nube', 'Aurora', 'Constelación', 'Elemento', 'Compuesto', 'Reacción', 'Molécula', 'Gravedad', 'Energía', 'Órbita', 'Aceleración', 'Álgebra', 'Geometría', 'Derivada', 'Ecuación', 'Continente', 'Montaña', 'Río', 'Valle'];
+
+
+
         let puntuacion = 0
 
 
@@ -174,7 +177,7 @@
             wordContainer.style.display = "block";
             setTimeout(() => {
                 wordContainer.style.display = "none";
-            }, 800);
+            }, 100);
         }
 
         // Verificar respuesta
@@ -194,7 +197,7 @@
                 checkmarkSvg.style.display = "block";
                 setTimeout(() => {
                     checkmarkSvg.style.display = "none";
-                }, 500);
+                }, 50);
 
                 // Limpiar el input
                 wordInput.value = '';
@@ -202,13 +205,13 @@
                 // Mostrar una nueva palabra después de la verificación
                 setTimeout(() => {
                     mostrarPalabraAleatoria();
-                }, 800)
+                }, 100)
 
                 // Asigna la puntuación
                 puntuacion++
                 document.getElementById('score').textContent = puntuacion;
 
-                if (puntuacion === 5) {
+                if (puntuacion === 20) {
                     mostrarModalJuegoTerminado();
                 }
 
@@ -218,7 +221,7 @@
                 incorrectmarkSvg.style.display = "block";
                 setTimeout(() => {
                     incorrectmarkSvg.style.display = "none";
-                }, 500);
+                }, 50);
 
                 // Limpiar el input
                 wordInput.value = '';
@@ -226,7 +229,7 @@
                 // Mostrar una nueva palabra después de la verificación
                 setTimeout(() => {
                     mostrarPalabraAleatoria();
-                }, 800)
+                }, 100)
             }
         }
 
