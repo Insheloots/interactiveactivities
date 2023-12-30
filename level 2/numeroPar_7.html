@@ -21,8 +21,8 @@
 
     .container {
       display: grid;
-      grid-template-columns: repeat(4, 50px);
-      grid-template-rows: repeat(4, 50px);
+      grid-template-columns: repeat(6, 50px);
+      grid-template-rows: repeat(6, 50px);
       gap: 5px;
       align-items: center;
       justify-content: center;
@@ -193,16 +193,16 @@
         document.getElementById("score").innerText = score;
 
         // Verificar si el juego ha terminado (contador llega a 10)
-        if (score === 4) {
+        if (score === 3) {
           score = 0;
           mostrarModalJuegoTerminado();
         }
       }
 
       // Crear y agregar los cuadrados al contenedor
-      for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-          const randomNumber = Math.floor(Math.random() * 51); // Números del 0 al 100
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
+          const randomNumber = Math.floor(Math.random() * 101); // Números del 0 al 100
           const square = document.createElement("div");
           square.classList.add("square");
           square.innerText = randomNumber;
