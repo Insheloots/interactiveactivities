@@ -1,266 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Numero Par</title>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
-        background-color: #f0f0f0;
-      }
 
-      .container {
-        display: grid;
-        grid-template-columns: repeat(6, 50px);
-        grid-template-rows: repeat(6, 50px);
-        gap: 5px;
-        align-items: center;
-        justify-content: center;
-        max-width: 350px;
-        /* Ajusta el ancho máximo según tus necesidades */
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Numero Par</title>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
 
-      .square {
-        /* Mantén los estilos existentes para los cuadrados */
-        width: 50px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        border: 1px solid #ccc;
-        background-color: #fff;
-        transition: background-color 0.3s;
-      }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(6, 50px);
+      grid-template-rows: repeat(6, 50px);
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+      max-width: 350px;
+      /* Ajusta el ancho máximo según tus necesidades */
+    }
 
-      .square.correct {
-        background-color: #22c55e;
-        /* Verde */
-      }
+    .square {
+      /* Mantén los estilos existentes para los cuadrados */
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      transition: background-color 0.3s;
+    }
 
-      .square.incorrect {
-        background-color: #ef4444;
-        /* Rojo */
-      }
-    </style>
-    <title>Numero Par</title>
-  </head>
+    .square.correct {
+      background-color: #22c55e;
+      /* Verde */
+    }
 
-  <body>
-    <!-- Modal de inicio -->
-    <div
-      id="backgroundModal"
-      class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-    >
-      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+    .square.incorrect {
+      background-color: #ef4444;
+      /* Rojo */
+    }
+  </style>
+  <title>Numero Par</title>
+</head>
+
+<body>
+  <!-- Modal de inicio -->
+  <div id="backgroundModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div id="startModal" class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
         <div
-          id="startModal"
-          class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
-        >
-          <div
-            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
-          >
-            <!-- Panel del modal -->
-            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-              <!-- Título en la parte superior -->
-              <h2 class="text-xl text-center font-bold mb-6 text-sky-600">
-                ¡Bienvenido a Numero Par!
-              </h2>
-              <!-- Contenido del modal -->
-              <div class="sm:flex sm:items-start">
-                <!-- Objetivo e Instrucciones en la parte inferior -->
-                <div class="flex flex-col items-start mb-10">
-                  <p class="text-base text-justify m-1">
-                    <span class="font-bold">Objetivo: </span>Estimular la
-                    concentración mediante la lectura rápida de las cifras.
-                  </p>
-                  <p class="text-base text-justify m-1">
-                    <span class="font-bold">Instrucciones: </span>Seleccione las
-                    cifras pares en el menor tiempo posible.
-                  </p>
-                </div>
+          class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <!-- Panel del modal -->
+          <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <!-- Título en la parte superior -->
+            <h2 class="text-xl text-center font-bold mb-6 text-sky-600">
+              ¡Bienvenido a Numero Par!
+            </h2>
+            <!-- Contenido del modal -->
+            <div class="sm:flex sm:items-start">
+              <!-- Objetivo e Instrucciones en la parte inferior -->
+              <div class="flex flex-col items-start mb-10">
+                <p class="text-base text-justify m-1">
+                  <span class="font-bold">Objetivo: </span>Estimular la
+                  concentración mediante la lectura rápida de las cifras.
+                </p>
+                <p class="text-base text-justify m-1">
+                  <span class="font-bold">Instrucciones: </span>Seleccione las
+                  cifras pares en el menor tiempo posible.
+                </p>
               </div>
-              <!-- Botón centrado debajo de Objetivo e Instrucciones -->
-              <div class="flex justify-center">
-                <button
-                  class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
-                  onclick="iniciarJuego()"
-                >
-                  Comenzar Juego
-                </button>
-              </div>
+            </div>
+            <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+            <div class="flex justify-center">
+              <button
+                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                onclick="iniciarJuego()">
+                Comenzar Juego
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="container" id="container"></div>
+  <div class="container" id="container"></div>
 
-    <!-- Contador de puntuación -->
-    <div
-      id="scoreContainer"
-      class="absolute top-4 right-4 text-lg font-semibold text-white bg-sky-600 p-2 rounded shadow"
-    >
-      Puntuación: <span id="score" class="ml-2">0</span>
-    </div>
+  <!-- Contador de puntuación -->
+  <div id="scoreContainer"
+    class="absolute top-4 right-4 text-lg font-semibold text-white bg-sky-600 p-2 rounded shadow">
+    Puntuación: <span id="score" class="ml-2">0</span>
+  </div>
 
-    <!-- Modal de juego terminado -->
-    <div
-      id="endBackgroundModal"
-      class="fixed hidden inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-    >
-      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+  <!-- Modal de juego terminado -->
+  <div id="endBackgroundModal" class="fixed hidden inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div id="endModal" class="flex hidden min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
         <div
-          id="endModal"
-          class="flex hidden min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
-        >
-          <div
-            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
-          >
-            <!-- Panel del modal -->
-            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-              <!-- Título en la parte superior -->
-              <h2 class="text-xl text-center font-bold mb-6 text-sky-600">
-                ¡Felicidades actividad terminada!
-              </h2>
-              <!-- Botón centrado debajo de Objetivo e Instrucciones -->
-              <div class="flex justify-center">
-                <button
-                  class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
-                  onclick="reiniciarJuego()"
-                >
-                  Reiniciar actividad
-                </button>
-              </div>
+          class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <!-- Panel del modal -->
+          <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <!-- Título en la parte superior -->
+            <h2 class="text-xl text-center font-bold mb-6 text-sky-600">
+              ¡Felicidades actividad terminada!
+            </h2>
+            <!-- Botón centrado debajo de Objetivo e Instrucciones -->
+            <div class="flex justify-center">
+              <button
+                class="transition ease-in-out bg-gray-950 hover:bg-gray-900 text-gray-300 text-base font-semibold py-2 px-4 rounded-lg"
+                onclick="reiniciarJuego()">
+                Reiniciar actividad
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const container = document.getElementById("container");
-        let score = 0;
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const container = document.getElementById("container");
+      let score = 0;
 
-        // Función para determinar si un número es par
-        function isEven(num) {
-          return num % 2 === 0;
+      // Función para determinar si un número es par
+      function isEven(num) {
+        return num % 2 === 0;
+      }
+
+      // Función para manejar el clic en un cuadrado
+      function handleClick(event) {
+        const square = event.target;
+        const number = parseInt(square.innerText);
+
+        // Verificar si el número es par o impar y aplicar el estilo correspondiente
+        if (isEven(number)) {
+          square.classList.add("correct");
+        } else {
+          square.classList.add("incorrect");
         }
 
-        // Función para manejar el clic en un cuadrado
-        function handleClick(event) {
-          const square = event.target;
+        // Deshabilitar el clic después de revelar el número
+        square.removeEventListener("click", handleClick);
+
+        // Verificar si todos los números pares han sido clicados
+        if (checkAllEvenClicked()) {
+          // Reiniciar el juego generando nuevos números aleatorios
+          resetGame();
+        }
+      }
+
+      // Función para verificar si todos los números pares han sido clicados
+      function checkAllEvenClicked() {
+        const squares = document.querySelectorAll(".square");
+        for (const square of squares) {
           const number = parseInt(square.innerText);
-
-          // Verificar si el número es par o impar y aplicar el estilo correspondiente
-          if (isEven(number)) {
-            square.classList.add("correct");
-          } else {
-            square.classList.add("incorrect");
-          }
-
-          // Deshabilitar el clic después de revelar el número
-          square.removeEventListener("click", handleClick);
-
-          // Verificar si todos los números pares han sido clicados
-          if (checkAllEvenClicked()) {
-            // Reiniciar el juego generando nuevos números aleatorios
-            resetGame();
+          if (isEven(number) && !square.classList.contains("correct")) {
+            return false;
           }
         }
-
-        // Función para verificar si todos los números pares han sido clicados
-        function checkAllEvenClicked() {
-          const squares = document.querySelectorAll(".square");
-          for (const square of squares) {
-            const number = parseInt(square.innerText);
-            if (isEven(number) && !square.classList.contains("correct")) {
-              return false;
-            }
-          }
-          return true;
-        }
-
-        // Función para reiniciar el juego generando nuevos números aleatorios
-        function resetGame() {
-          const squares = document.querySelectorAll(".square");
-          for (const square of squares) {
-            square.innerText = Math.floor(Math.random() * 101); // Números del 0 al 100
-            square.classList.remove("correct", "incorrect");
-            square.addEventListener("click", handleClick);
-          }
-
-          // Incrementar el contador
-          score++;
-
-          // Actualizar el marcador de puntuación
-          document.getElementById("score").innerText = score;
-
-          // Verificar si el juego ha terminado (contador llega a 10)
-          if (score === 4) {
-            mostrarModalJuegoTerminado();
-            
-            
-          }
-        }
-
-        // Crear y agregar los cuadrados al contenedor
-        for (let i = 0; i < 6; i++) {
-          for (let j = 0; j < 6; j++) {
-            const randomNumber = Math.floor(Math.random() * 101); // Números del 0 al 100
-            const square = document.createElement("div");
-            square.classList.add("square");
-            square.innerText = randomNumber;
-            square.addEventListener("click", handleClick);
-            container.appendChild(square);
-          }
-        }
-      });
-
-      // Función para mostrar el modal de inicio
-      function mostrarModalInicio() {
-        document.getElementById("startModal").style.display = "flex";
-        document.getElementById("backgroundModal").style.display = "flex";
+        return true;
       }
 
-      // Función para iniciar el juego al cerrar el modal de inicio
-      function iniciarJuego() {
-        document.getElementById("startModal").style.display = "none";
-        document.getElementById("backgroundModal").style.display = "none";
-        reiniciarJuego();
-      }
+      // Función para reiniciar el juego generando nuevos números aleatorios
+      function resetGame() {
+        const squares = document.querySelectorAll(".square");
+        for (const square of squares) {
+          square.innerText = Math.floor(Math.random() * 101); // Números del 0 al 100
+          square.classList.remove("correct", "incorrect");
+          square.addEventListener("click", handleClick);
+        }
 
-      function mostrarModalJuegoTerminado() {
-        document.getElementById("endModal").style.display = "flex";
-        document.getElementById("endBackgroundModal").style.display = "flex";
-      }
+        // Incrementar el contador
+        score++;
 
-      // Reinicia el juego
-      function reiniciarJuego() {
-        document.getElementById("endModal").style.display = "none";
-        document.getElementById("endBackgroundModal").style.display = "none";
-
-        // Restablecer el contador a cero
-        score = 0;
+        // Actualizar el marcador de puntuación
         document.getElementById("score").innerText = score;
 
-        // Reiniciar el juego generando nuevos números aleatorios
-        resetGame();
+        // Verificar si el juego ha terminado (contador llega a 10)
+        if (score === 2) {
+          score = 0;
+          mostrarModalJuegoTerminado();
+        }
       }
-    </script>
-  </body>
+
+      // Crear y agregar los cuadrados al contenedor
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
+          const randomNumber = Math.floor(Math.random() * 101); // Números del 0 al 100
+          const square = document.createElement("div");
+          square.classList.add("square");
+          square.innerText = randomNumber;
+          square.addEventListener("click", handleClick);
+          container.appendChild(square);
+        }
+      }
+    });
+
+    // Función para mostrar el modal de inicio
+    function mostrarModalInicio() {
+      document.getElementById("startModal").style.display = "flex";
+      document.getElementById("backgroundModal").style.display = "flex";
+    }
+
+    // Función para iniciar el juego al cerrar el modal de inicio
+    function iniciarJuego() {
+      document.getElementById("startModal").style.display = "none";
+      document.getElementById("backgroundModal").style.display = "none";
+      reiniciarJuego();
+    }
+
+    function mostrarModalJuegoTerminado() {
+      document.getElementById("endModal").style.display = "flex";
+      document.getElementById("endBackgroundModal").style.display = "flex";
+    }
+
+    // Reinicia el juego
+    function reiniciarJuego() {
+      document.getElementById("endModal").style.display = "none";
+      document.getElementById("endBackgroundModal").style.display = "none";
+
+      // Restablecer el contador a cero
+      score = 0;
+      document.getElementById("score").innerText = score;
+
+      // Reiniciar el juego generando nuevos números aleatorios
+      resetGame();
+    }
+  </script>
+</body>
+
 </html>

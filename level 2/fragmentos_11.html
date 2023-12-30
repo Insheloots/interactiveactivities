@@ -252,7 +252,7 @@
         optionsContainer.innerHTML = "";
 
         // Muestra solo las primeras 9 palabras y la palabra actual
-        const optionsToShow = [...words.slice(0, 2), currentWord];
+        const optionsToShow = [...words.slice(0, 3), currentWord];
 
         shuffleArray(optionsToShow);
 
@@ -275,7 +275,7 @@
           optionElement.classList.add("correct");
           puntuacion++;
           document.getElementById("score").textContent = puntuacion;
-          if (puntuacion === 7) {
+          if (puntuacion === 10) {
             // Mostrar modal de juego terminado
             mostrarModalJuegoTerminado();
           }
@@ -297,7 +297,7 @@
           document.getElementById("timeModal").style.display = "flex";
           document.getElementById("timeBackgroundModal").style.display = "flex";
           startGame();
-        }, 15000); // Cambia este valor al tiempo deseado en milisegundos
+        }, 10000); // Cambia este valor al tiempo deseado en milisegundos
       }
 
       // Inicia el juego cuando la página se carga

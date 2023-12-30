@@ -11,7 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
-        font-family: 'Poppins', Arial, sans-serif;
+        font-family: "Poppins", Arial, sans-serif;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -194,35 +194,36 @@
       }
       // Definición de Palabras y Variables Globales:
       const words = [
-        "Victoria",
-        "Programación",
-        "Memoria",
-        "Desarrollo",
-        "JavaScript",
-        "HTML",
-        "CSS",
-        "Innovación",
-        "Algoritmo",
-        "Plataforma",
-        "Inteligencia",
-        "Aprendizaje",
-        "Código",
-        "Framework",
-        "Interfaz",
-        "Repositorio",
-        "Aplicación",
-        "Optimización",
-        "Seguridad",
-        "Navegador",
-        "Arquitectura",
-        "Compatibilidad",
-        "Eficiencia",
-        "Recursividad",
-        "Paradigma",
-        "Funcionalidad",
-        "Experiencia",
-        "Modularidad",
-        "Prototipo",
+        "Empoderamiento",
+        "Positividad",
+        "Gratitud",
+        "Resiliencia",
+        "Optimismo",
+        "Confianza",
+        "Felicidad",
+        "Superación",
+        "Éxito",
+        "Motivación",
+        "Fortaleza",
+        "Esperanza",
+        "Transformación",
+        "Crecimiento",
+        "Logro",
+        "Inspiración",
+        "Determinación",
+        "Pasión",
+        "Progreso",
+        "Aliento",
+        "Realización",
+        "Empatía",
+        "Agradecimiento",
+        "Abundancia",
+        "Paz",
+        "Autenticidad",
+        "Alegría",
+        "Generosidad",
+        "Amor",
+        "Conexión",
       ];
       shuffleArray(words);
       let currentWord;
@@ -252,7 +253,7 @@
         optionsContainer.innerHTML = "";
 
         // Muestra solo las primeras 9 palabras y la palabra actual
-        const optionsToShow = [...words.slice(0, 2), currentWord];
+        const optionsToShow = [...words.slice(0, 6), currentWord];
 
         shuffleArray(optionsToShow);
 
@@ -275,7 +276,7 @@
           optionElement.classList.add("correct");
           puntuacion++;
           document.getElementById("score").textContent = puntuacion;
-          if (puntuacion === 7) {
+          if (puntuacion === 20) {
             // Mostrar modal de juego terminado
             mostrarModalJuegoTerminado();
           }
@@ -286,18 +287,18 @@
         setTimeout(() => {
           optionElement.classList.remove("correct", "incorrect");
           startGame();
-        }, 2000);
+        }, 1000);
         //document.getElementById('options-container').classList.add('hidden');
         //document.getElementById('congratulations').classList.remove('hidden');
       }
 
-      // Iniciar un temporizador que ejecutará el código dentro de la función después de 15 segundos intentar de nuevo. 
+      // Iniciar un temporizador que ejecutará el código dentro de la función después de 15 segundos intentar de nuevo.
       function startTimer() {
         timer = setTimeout(() => {
           document.getElementById("timeModal").style.display = "flex";
           document.getElementById("timeBackgroundModal").style.display = "flex";
           startGame();
-        }, 15000); // Cambia este valor al tiempo deseado en milisegundos
+        }, 3000); // Cambia este valor al tiempo deseado en milisegundos
       }
 
       // Inicia el juego cuando la página se carga
