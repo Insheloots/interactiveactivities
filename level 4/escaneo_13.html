@@ -186,7 +186,7 @@
       let currentParagraph = "";
       let totalOccurrences = 0;
       let count = 0;
-      let currentKeyword = "lectura";
+      let currentKeyword = "motivación";
 
       const paragraph = document.getElementById("paragraph");
       const counter = document.getElementById("counter");
@@ -195,8 +195,9 @@
 
       // Definir el párrafo
       let paragraphs = [
-        "La lectura rápida es una habilidad que busca incrementar la velocidad de lectura sin sacrificar la comprensión del contenido. Se fundamenta en técnicas que entrenan al lector para procesar bloques de texto en lugar de palabras individuales",
-        "Saber es el faro que ilumina nuestro camino en la búsqueda del conocimiento. Cada día, nos embarcamos en un viaje para descubrir, aprender y comprender más sobre el vasto mundo que nos rodea. La sed de saber nos impulsa a explorar nuevos horizontes y desentrañar los misterios que yacen ante nosotros",
+        "En el camino hacia el éxito, la motivación es la brújula que guía nuestros pasos. Enfrentamos desafíos con determinación y encontramos en la motivación la fuerza para superar cualquier obstáculo. Cada logro es un recordatorio de la importancia de cultivar una mente llena de motivación. La verdadera motivación reside en descubrir nuestras pasiones, perseverar ante la adversidad y celebrar cada pequeño triunfo en el viaje de la vida.",
+        "El ejercicio es la llave que desbloquea el potencial de nuestro cuerpo y mente. A través de rutinas diarias, el ejercicio fortalece nuestros músculos y libera endorfinas que elevan nuestro estado de ánimo. En la búsqueda de la salud holística, el ejercicio se convierte en un compañero leal. Ya sea en la tranquilidad de un paseo matutino o en la intensidad de una sesión de entrenamiento, el ejercicio nutre nuestro bienestar físico y mental.",
+        "En el desafío de la vida, tu actitud determina el resultado final. A pesar de las tormentas que puedan surgir, mantén la certeza en tu corazón de que vencerás. Vencerás cada obstáculo con valentía y determinación. La promesa de vencerás es el faro que guía tu camino, iluminando incluso las noches más oscuras. Con cada paso, con cada elección, te acercas al triunfo que vencerás inevitablemente. ¡ Vencerás, vencerás, vencerás, vencerás, vencerás !",
       ];
 
       function cambiarContenido() {
@@ -292,10 +293,10 @@
         document.getElementById("runBackgroundModal").style.display = "none";
 
         // Cambiar la palabra clave según el párrafo actual
-        if (currentKeyword === "lectura") {
-          currentKeyword = "saber";
-        } else if (currentKeyword === "luz") {
-          currentKeyword = "vida";
+        if (currentKeyword === "motivación") {
+          currentKeyword = "ejercicio";
+        } else if (currentKeyword === "ejercicio") {
+          currentKeyword = "vencerás";
         }
         // Cambiar el contenido con la nueva palabra clave
         cambiarContenido();
@@ -313,10 +314,11 @@
         currentParagraph = "";
         totalOccurrences = 0;
         count = 0;
-        currentKeyword = "lectura";
+        currentKeyword = "motivación";
         paragraphs = [
-          "La lectura rápida es una habilidad que busca incrementar la velocidad de lectura sin sacrificar la comprensión del contenido. Se fundamenta en técnicas que entrenan al lector para procesar bloques de texto en lugar de palabras individuales",
-          "Saber es el faro que ilumina nuestro camino en la búsqueda del conocimiento. Cada día, nos embarcamos en un viaje para descubrir, aprender y comprender más sobre el vasto mundo que nos rodea. La sed de saber nos impulsa a explorar nuevos horizontes y desentrañar los misterios que yacen ante nosotros",
+          "En el camino hacia el éxito, la motivación es la brújula que guía nuestros pasos. Enfrentamos desafíos con determinación y encontramos en la motivación la fuerza para superar cualquier obstáculo. Cada logro es un recordatorio de la importancia de cultivar una mente llena de motivación. La verdadera motivación reside en descubrir nuestras pasiones, perseverar ante la adversidad y celebrar cada pequeño triunfo en el viaje de la vida.",
+          "El ejercicio es la llave que desbloquea el potencial de nuestro cuerpo y mente. A través de rutinas diarias, el ejercicio fortalece nuestros músculos y libera endorfinas que elevan nuestro estado de ánimo. En la búsqueda de la salud holística, el ejercicio se convierte en un compañero leal. Ya sea en la tranquilidad de un paseo matutino o en la intensidad de una sesión de entrenamiento, el ejercicio nutre nuestro bienestar físico y mental.",
+          "En el desafío de la vida, tu actitud determina el resultado final. A pesar de las tormentas que puedan surgir, mantén la certeza en tu corazón de que vencerás. Vencerás cada obstáculo con valentía y determinación. La promesa de vencerás es el faro que guía tu camino, iluminando incluso las noches más oscuras. Con cada paso, con cada elección, te acercas al triunfo que vencerás inevitablemente. ¡ Vencerás, vencerás, vencerás, vencerás, vencerás !",
         ];
         mostrarModalInicio();
       }

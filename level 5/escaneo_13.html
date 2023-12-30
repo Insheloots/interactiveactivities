@@ -186,7 +186,7 @@
       let currentParagraph = "";
       let totalOccurrences = 0;
       let count = 0;
-      let currentKeyword = "lectura";
+      let currentKeyword = "adversidad";
 
       const paragraph = document.getElementById("paragraph");
       const counter = document.getElementById("counter");
@@ -195,8 +195,11 @@
 
       // Definir el párrafo
       let paragraphs = [
-        "La lectura rápida es una habilidad que busca incrementar la velocidad de lectura sin sacrificar la comprensión del contenido. Se fundamenta en técnicas que entrenan al lector para procesar bloques de texto en lugar de palabras individuales",
-        "Saber es el faro que ilumina nuestro camino en la búsqueda del conocimiento. Cada día, nos embarcamos en un viaje para descubrir, aprender y comprender más sobre el vasto mundo que nos rodea. La sed de saber nos impulsa a explorar nuevos horizontes y desentrañar los misterios que yacen ante nosotros",
+        "La vida, en su viaje intrincado, nos presenta la adversidad como una compañera constante. La adversidad no es un obstáculo insuperable, sino una oportunidad para desarrollar resiliencia. En medio de la adversidad, descubrimos nuestra verdadera fuerza interior. Afrontar la adversidad nos brinda la posibilidad de aprender lecciones valiosas y de crecer como individuos. En la danza de la vida, la adversidad es la melodía que nos impulsa a bailar con gracia y determinación. La adversidad es la prueba que revela la verdadera naturaleza de nuestro carácter. En los momentos difíciles, se forja el acero de la determinación y la voluntad. La vida, con sus giros inesperados, nos desafía a ser flexibles como el bambú, doblándonos pero sin rompernos. En la oscuridad de la adversidad, encendemos la luz interior que nos guía hacia la esperanza y la renovación.",
+        "En los momentos de soledad y alegría, en la oscuridad de la noche y la luz del día, siempre llevamos la presencia de Dios en nuestros corazones. Dios es nuestro refugio en tiempos difíciles, la guía en nuestras decisiones y el faro que ilumina nuestro camino. En la danza de la existencia, reconocemos la mano amorosa de Dios que nos sostiene. Con gratitud en cada latido del corazón, con reverencia en cada suspiro, honramos la conexión eterna con Dios. En la quietud de la naturaleza y el bullicio de la ciudad, podemos encontrar la presencia silenciosa de Dios. A través de los misterios de la creación, contemplamos la sabiduría divina que se revela en cada detalle. En la armonía de la vida cotidiana, reconocemos la mano de Dios guiándonos con amor y compasión. Dios, el arquitecto supremo del universo, teje nuestra historia en el tapiz del tiempo, recordándonos que estamos todos interconectados.",
+        "En el rincón más profundo de su mente, encontró la locura danzando como una llama errante. La locura, esa chispa creativa que desafía las normas y se sumerge en el caos del pensamiento, se convirtió en su compañera inseparable. En la locura descubrió la libertad de explorar ideas extravagantes y desafiar las restricciones convencionales. La locura no era un obstáculo, sino un sendero hacia la innovación y la genialidad. En su viaje, abrazó la locura como una musa, permitiendo que las palabras, coloreadas por la tinta de la imprudencia, se plasmaran en el lienzo de su imaginación. A través de la locura, encontró la clave para abrir puertas a mundos inexplorados y desentrañar los misterios ocultos en la maraña de la realidad.",
+        "En el último capítulo de su historia, encontró el fin marcando cada página de su vida con un sutil toque de inevitabilidad. El fin, ese punto de llegada que simultáneamente cierra y revela, se convirtió en un eco persistente en su viaje. En cada elección y cada desafío, vislumbraba destellos del fin, recordándole la efímera naturaleza de cada momento. A veces, el fin era una despedida suave, como el susurro del viento al atardecer. Otras veces, el fin era una explosión, un fuego artificial que iluminaba el cielo nocturno de su existencia. A través de los altibajos, abrazó el fin como una metáfora de la renovación constante, donde cada punto final marcaba el comienzo de un nuevo capítulo.",
+
       ];
 
       function cambiarContenido() {
@@ -292,11 +295,14 @@
         document.getElementById("runBackgroundModal").style.display = "none";
 
         // Cambiar la palabra clave según el párrafo actual
-        if (currentKeyword === "lectura") {
-          currentKeyword = "saber";
-        } else if (currentKeyword === "luz") {
-          currentKeyword = "vida";
+        if (currentKeyword === "adversidad") {
+          currentKeyword = "Dios".toLowerCase();
+        } else if (currentKeyword === "Dios".toLowerCase()) {
+          currentKeyword = "locura";
+        } else if (currentKeyword === "locura") {
+          currentKeyword = "fin";
         }
+
         // Cambiar el contenido con la nueva palabra clave
         cambiarContenido();
       }
@@ -313,10 +319,12 @@
         currentParagraph = "";
         totalOccurrences = 0;
         count = 0;
-        currentKeyword = "lectura";
+        currentKeyword = "motivación";
         paragraphs = [
-          "La lectura rápida es una habilidad que busca incrementar la velocidad de lectura sin sacrificar la comprensión del contenido. Se fundamenta en técnicas que entrenan al lector para procesar bloques de texto en lugar de palabras individuales",
-          "Saber es el faro que ilumina nuestro camino en la búsqueda del conocimiento. Cada día, nos embarcamos en un viaje para descubrir, aprender y comprender más sobre el vasto mundo que nos rodea. La sed de saber nos impulsa a explorar nuevos horizontes y desentrañar los misterios que yacen ante nosotros",
+        "La vida, en su viaje intrincado, nos presenta la adversidad como una compañera constante. La adversidad no es un obstáculo insuperable, sino una oportunidad para desarrollar resiliencia. En medio de la adversidad, descubrimos nuestra verdadera fuerza interior. Afrontar la adversidad nos brinda la posibilidad de aprender lecciones valiosas y de crecer como individuos. En la danza de la vida, la adversidad es la melodía que nos impulsa a bailar con gracia y determinación. La adversidad es la prueba que revela la verdadera naturaleza de nuestro carácter. En los momentos difíciles, se forja el acero de la determinación y la voluntad. La vida, con sus giros inesperados, nos desafía a ser flexibles como el bambú, doblándonos pero sin rompernos. En la oscuridad de la adversidad, encendemos la luz interior que nos guía hacia la esperanza y la renovación.",
+        "En los momentos de soledad y alegría, en la oscuridad de la noche y la luz del día, siempre llevamos la presencia de Dios en nuestros corazones. Dios es nuestro refugio en tiempos difíciles, la guía en nuestras decisiones y el faro que ilumina nuestro camino. En la danza de la existencia, reconocemos la mano amorosa de Dios que nos sostiene. Con gratitud en cada latido del corazón, con reverencia en cada suspiro, honramos la conexión eterna con Dios. En la quietud de la naturaleza y el bullicio de la ciudad, podemos encontrar la presencia silenciosa de Dios. A través de los misterios de la creación, contemplamos la sabiduría divina que se revela en cada detalle. En la armonía de la vida cotidiana, reconocemos la mano de Dios guiándonos con amor y compasión. Dios, el arquitecto supremo del universo, teje nuestra historia en el tapiz del tiempo, recordándonos que estamos todos interconectados.",
+        "En el rincón más profundo de su mente, encontró la locura danzando como una llama errante. La locura, esa chispa creativa que desafía las normas y se sumerge en el caos del pensamiento, se convirtió en su compañera inseparable. En la locura descubrió la libertad de explorar ideas extravagantes y desafiar las restricciones convencionales. La locura no era un obstáculo, sino un sendero hacia la innovación y la genialidad. En su viaje, abrazó la locura como una musa, permitiendo que las palabras, coloreadas por la tinta de la imprudencia, se plasmaran en el lienzo de su imaginación. A través de la locura, encontró la clave para abrir puertas a mundos inexplorados y desentrañar los misterios ocultos en la maraña de la realidad.",
+        "En el último capítulo de su historia, encontró el fin marcando cada página de su vida con un sutil toque de inevitabilidad. El fin, ese punto de llegada que simultáneamente cierra y revela, se convirtió en un eco persistente en su viaje. En cada elección y cada desafío, vislumbraba destellos del fin, recordándole la efímera naturaleza de cada momento. A veces, el fin era una despedida suave, como el susurro del viento al atardecer. Otras veces, el fin era una explosión, un fuego artificial que iluminaba el cielo nocturno de su existencia. A través de los altibajos, abrazó el fin como una metáfora de la renovación constante, donde cada punto final marcaba el comienzo de un nuevo capítulo.",
         ];
         mostrarModalInicio();
       }
