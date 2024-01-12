@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fragmentos</title>
+    <title>Completa la frase</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -19,7 +19,7 @@
         margin: 0;
       }
 
-      #word-display {
+      #phrase-display {
         cursor: pointer;
         font-family: "Arial", sans-serif;
         font-size: 24px;
@@ -50,6 +50,7 @@
         display: none;
       }
     </style>
+    <title>COMPLETA LA FRASE</title>
   </head>
   <body>
     <!-- Modal de inicio -->
@@ -69,20 +70,23 @@
             <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <!-- Título en la parte superior -->
               <h2 class="text-xl text-center font-bold mb-6 text-sky-600">
-                ¡Bienvenido a Fragmentos!
+                ¡Bienvenido a Completa La Frase!
               </h2>
               <!-- Contenido del modal -->
               <div class="sm:flex sm:items-start">
                 <!-- Objetivo e Instrucciones en la parte inferior -->
                 <div class="flex flex-col items-start mb-10">
                   <p class="text-base text-justify m-1">
-                    <span class="font-bold">Objetivo: </span>Reforzar la
-                    atención mediante el ejercicio de lectura y selección.
+                    <span class="font-bold">Objetivo: </span>Ejercitar la
+                    comprensión lectora mediante la organización correcta de los
+                    elementos de la frase.
                   </p>
                   <p class="text-base text-justify m-1">
-                    <span class="font-bold">Instrucciones: </span>Seleccione en
-                    la lista la palabra que contiene el fragmento indicado en el
-                    menor tiempo posible.
+                    <span class="font-bold">Instrucciones: </span>Realiza la
+                    lectura en silencio. No muevas los labios durante este
+                    proceso. Selecciona la parte de la frase que le da sentido
+                    al texto inicial. Realiza la actividad en el menor tiempo
+                    posible.
                   </p>
                 </div>
               </div>
@@ -100,9 +104,8 @@
         </div>
       </div>
     </div>
-
     <div class="game-container">
-      <div id="word-display"></div>
+      <div id="phrase-display"></div>
       <div id="options-container" class="hidden"></div>
       <div id="congratulations" class="hidden">
         <h2>Felicitaciones, ¡has ganado!</h2>
@@ -192,93 +195,121 @@
           [array[i], array[j]] = [array[j], array[i]];
         }
       }
-      // Definición de Palabras y Variables Globales:
-      const words = [
-        "Victoria",
-        "Programación",
-        "Memoria",
-        "Desarrollo",
-        "JavaScript",
-        "HTML",
-        "CSS",
-        "Innovación",
-        "Algoritmo",
-        "Plataforma",
-        "Inteligencia",
-        "Aprendizaje",
-        "Código",
-        "Framework",
-        "Interfaz",
-        "Repositorio",
-        "Aplicación",
-        "Optimización",
-        "Seguridad",
-        "Navegador",
-        "Arquitectura",
-        "Compatibilidad",
-        "Eficiencia",
-        "Recursividad",
-        "Paradigma",
-        "Funcionalidad",
-        "Experiencia",
-        "Modularidad",
-        "Prototipo",
+
+      const phrases = [
+        "A palabras necias oídos sordos",
+        "Haz el amor y no la guerra",
+        "Camarón que se duerme se lo lleva la corriente",
+        "Más vale prevenir que lamentar",
+        "A buen entendedor pocas palabras bastan",
+        "La vida es sueño, y los sueños, sueños son",
+        "La práctica hace al maestro",
+        "El que mucho abarca, poco aprieta",
+        "Más vale tarde que nunca",
+        "No hay mal que por bien no venga",
+        "Donde hay humo, hay fuego",
+        "A mal tiempo, buena cara",
+        "Más vale maña que fuerza",
+        "Ojos que no ven, corazón que no siente",
+        "Perro que ladra, no muerde",
+        "Camarón que se duerme, se lo lleva la corriente",
+        "Más vale pájaro en mano que cien volando",
+        "No hay peor ciego que el que no quiere ver",
+        "La paciencia es amarga, pero sus frutos son dulces",
+        "No hay caminos para la paz; la paz es el camino",
+        "A donde el corazón se inclina, el pie camina",
+        "El poder no cambia a las personas, solo revela quiénes son",
+        "Nunca es tarde si la dicha es buena",
+        "La enmienda es mejor que el arrepentimiento",
+        "Más vale perder el tiempo que perder la razón",
+        "Al que madruga Dios le ayuda",
+        "No hay profeta sin Honra sino en su propia tierra"
       ];
-      shuffleArray(words);
-      let currentWord;
+
+      shuffleArray(phrases);
+      let currentPhrase;
+      let incompletePart;
       let timer;
       let puntuacion = 0;
 
-      // Remueve la clase 'hidden' del contenedor de opciones
       function startGame() {
         document.getElementById("options-container").classList.remove("hidden");
         //document.getElementById('congratulations').classList.add('hidden');
-        pickRandomWord();
+        pickRandomPhrase();
+
         displayOptions();
         // Inicia un temporizador
         startTimer();
       }
 
-      // Selecciona una palabra aleatoria del array words.
-      // Muestra la palabra seleccionada en el elemento con id 'word-display'
-      function pickRandomWord() {
-        currentWord = words[Math.floor(Math.random() * words.length)];
-        document.getElementById("word-display").textContent = currentWord;
+      // Elige aleatoriamente una frase y encuentra la primera mitad de la frase
+      function pickRandomPhrase() {
+        currentPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+        incompletePart = getIncompletePart(currentPhrase);
+
+        // muestra la primera mitad de la frase
+        document.getElementById("phrase-display").textContent = currentPhrase
+          .substring(0, currentPhrase.indexOf(incompletePart))
+          .trim();
       }
 
-      // Baraja las palabras para presentarlas en orden aleatorio.
+      // Encuentra la mitad de la frase
+      function getIncompletePart(phrase) {
+        const words = phrase.split(" ");
+        const incompleteIndex = Math.floor(words.length / 2);
+        return words.slice(incompleteIndex).join(" ");
+      }
+
+      const maxVerticalOptions = 3;
+
+      // muestra las opciones (la segunda mitad de otras frases) y la primera mitad de la frase en "phrase-display".
       function displayOptions() {
         const optionsContainer = document.getElementById("options-container");
-        optionsContainer.innerHTML = "";
+        optionsContainer.textContent = "";
 
-        // Muestra solo las primeras 9 palabras y la palabra actual
-        const optionsToShow = [...words.slice(0, 2), currentWord];
+        // Obtén la segunda mitad de la frase sin repetirla
+        const incompleteOptions = getIncompletePart(currentPhrase);
 
-        shuffleArray(optionsToShow);
+        // Shuffle the phrases to randomize the options
+        const shuffledPhrases = [...phrases]
+          .filter((phrase) => phrase !== currentPhrase)
+          .sort(() => Math.random() - 0.5);
 
-        optionsToShow.forEach((word) => {
+        // Tomar solo las primeras 'maxVerticalOptions' frases
+        const visiblePhrases = shuffledPhrases.slice(0, maxVerticalOptions);
+
+        // Elegir aleatoriamente la posición para la opción correcta
+        const correctPosition = Math.floor(
+          Math.random() * (maxVerticalOptions + 1)
+        );
+
+        // Insertar la opción correcta en la posición elegida
+        visiblePhrases.splice(correctPosition, 0, currentPhrase);
+
+        visiblePhrases.forEach((phrase) => {
           const optionElement = document.createElement("div");
-          optionElement.textContent = word;
+          optionElement.textContent = getIncompletePart(phrase);
           optionElement.classList.add("option");
+
           optionElement.addEventListener("click", () =>
-            checkAnswer(word, optionElement)
+            checkAnswer(phrase, optionElement)
           );
+
           optionsContainer.appendChild(optionElement);
         });
       }
-
-      function checkAnswer(selectedWord, optionElement) {
+      function checkAnswer(selectedPhrase, optionElement) {
         // Limpiar el temporizador actual para evitar ejecuciones múltiples
         clearTimeout(timer);
-        // Verificar si la palabra seleccionada es correcta
-        if (selectedWord === currentWord) {
+        // Comparar la frase seleccionada con la frase actual
+        if (selectedPhrase === currentPhrase) {
           optionElement.classList.add("correct");
           puntuacion++;
-          document.getElementById("score").textContent = puntuacion;
-          if (puntuacion === 7) {
+          if (puntuacion === 10) {
             // Mostrar modal de juego terminado
             mostrarModalJuegoTerminado();
           }
+          document.getElementById("score").textContent = puntuacion;
         } else {
           optionElement.classList.add("incorrect");
         }
@@ -286,18 +317,19 @@
         setTimeout(() => {
           optionElement.classList.remove("correct", "incorrect");
           startGame();
-        }, 2000);
+        }, 1000);
+
         //document.getElementById('options-container').classList.add('hidden');
         //document.getElementById('congratulations').classList.remove('hidden');
       }
 
-      // Iniciar un temporizador que ejecutará el código dentro de la función después de 15 segundos intentar de nuevo. 
       function startTimer() {
+        // Iniciar un temporizador que ejecutará el código dentro de la función después de 10 segundos
         timer = setTimeout(() => {
           document.getElementById("timeModal").style.display = "flex";
           document.getElementById("timeBackgroundModal").style.display = "flex";
           startGame();
-        }, 15000); // Cambia este valor al tiempo deseado en milisegundos
+        }, 10000); // Cambia este valor al tiempo deseado en milisegundos
       }
 
       // Inicia el juego cuando la página se carga
@@ -320,7 +352,7 @@
         document.getElementById("endModal").style.display = "flex";
         document.getElementById("endBackgroundModal").style.display = "flex";
       }
-      
+
       function reiniciarJuego() {
         // Ocultar modal de juego terminado
         document.getElementById("endModal").style.display = "none";
